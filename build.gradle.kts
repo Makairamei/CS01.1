@@ -58,6 +58,8 @@ android {
         targetSdk = 35  
     }  
 
+
+
     buildTypes {
         getByName("release") {
             isMinifyEnabled = true
