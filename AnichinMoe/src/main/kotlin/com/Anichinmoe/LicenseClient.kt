@@ -1,4 +1,4 @@
-package com.Anichinmoe
+﻿package com.Anichinmoe
 
 import android.content.Context
 import android.os.Build
@@ -271,4 +271,141 @@ object LicenseClient {
         @com.fasterxml.jackson.annotation.JsonProperty("status") val status: String? = null,
         @com.fasterxml.jackson.annotation.JsonProperty("key") val key: String? = null
     )
+
+    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // Hybrid Security: Selector & Secret fetching from server
+    // Plugin CANNOT scrape without these â€” server validates
+    // license before returning them.
+    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+
+    data class SelectorConfig(
+        @com.fasterxml.jackson.annotation.JsonProperty("server_selector") val serverSelector: String = "",
+        @com.fasterxml.jackson.annotation.JsonProperty("value_attr") val valueAttr: String = "value",
+        @com.fasterxml.jackson.annotation.JsonProperty("iframe_selector") val iframeSelector: String = "iframe",
+        @com.fasterxml.jackson.annotation.JsonProperty("iframe_attr") val iframeAttr: String = "src",
+        @com.fasterxml.jackson.annotation.JsonProperty("link_selector") val linkSelector: String = "a",
+        @com.fasterxml.jackson.annotation.JsonProperty("quality_selector") val qualitySelector: String = "strong",
+        @com.fasterxml.jackson.annotation.JsonProperty("encoding") val encoding: String = "base64",
+        @com.fasterxml.jackson.annotation.JsonProperty("type") val type: String = "standard"
+    )
+
+    data class SelectorResponse(
+        @com.fasterxml.jackson.annotation.JsonProperty("status") val status: String? = null,
+        @com.fasterxml.jackson.annotation.JsonProperty("selectors") val selectors: SelectorConfig? = null,
+        @com.fasterxml.jackson.annotation.JsonProperty("message") val message: String? = null
+    )
+
+    data class SecretResponse(
+        @com.fasterxml.jackson.annotation.JsonProperty("status") val status: String? = null,
+        @com.fasterxml.jackson.annotation.JsonProperty("k1") val k1: String? = null,
+        @com.fasterxml.jackson.annotation.JsonProperty("k2") val k2: String? = null,
+        @com.fasterxml.jackson.annotation.JsonProperty("message") val message: String? = null
+    )
+
+    // Cache for selectors and secrets (per plugin, 5 min TTL)
+    private val selectorCache = mutableMapOf<String, Pair<SelectorConfig, Long>>()
+    private val secretCache = mutableMapOf<String, Pair<SecretResponse, Long>>()
+    private val CACHE_TTL = 5 * 60 * 1000L // 5 minutes
+
+    /**
+     * Fetches CSS selectors for the given plugin from the server.
+     * Server validates license before returning selectors.
+     * Returns null if license is invalid/expired/revoked.
+     */
+    suspend fun getSelectors(pluginName: String): SelectorConfig? {
+        val now = System.currentTimeMillis()
+        // Return cached selectors if still valid
+        selectorCache[pluginName]?.let { (cfg, expiry) ->
+            if (now < expiry) return cfg
+        }
+
+        var key = getLicenseKey()
+        if (key.isNullOrEmpty()) key = discoverKey()
+        if (key.isNullOrEmpty()) {
+            licenseBlocked = true
+            blockMessage = "Lisensi tidak ditemukan. Tambahkan repo URL premium terlebih dahulu."
+            return null
+        }
+
+        return try {
+            val deviceId = getDeviceId()
+            val jsonPayload = """{"key":"$key","device_id":"$deviceId","plugin_name":"${pluginName.replace("\"", "")}"}"""
+            val body = jsonPayload.toRequestBody("application/json".toMediaTypeOrNull())
+            val response = app.post("$SERVER_URL/api/selectors", requestBody = body).text
+            val json = tryParseJson<SelectorResponse>(response)
+
+            if (json?.status == "ok" && json.selectors != null) {
+                // Cache for 5 minutes
+                selectorCache[pluginName] = Pair(json.selectors, now + CACHE_TTL)
+                licenseBlocked = false
+                json.selectors
+            } else {
+                licenseBlocked = true
+                blockMessage = json?.message ?: "Lisensi tidak valid"
+                // Clear cache on failure
+                selectorCache.remove(pluginName)
+                null
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "getSelectors network error: ${e.message}")
+            // Grace period: return cached selectors even if expired (10 min grace)
+            selectorCache[pluginName]?.let { (cfg, expiry) ->
+                if (now < expiry + 10 * 60 * 1000L) return cfg
+            }
+            null
+        }
+    }
+
+    /**
+     * Fetches HMAC secret keys for API-based plugins (e.g. MovieBox).
+     * Server validates license before returning keys.
+     * Returns null if license is invalid/expired/revoked.
+     */
+    suspend fun getMovieBoxSecret(pluginName: String): SecretResponse? {
+        val now = System.currentTimeMillis()
+        // Return cached secret if still valid
+        secretCache[pluginName]?.let { (secret, expiry) ->
+            if (now < expiry) return secret
+        }
+
+        var key = getLicenseKey()
+        if (key.isNullOrEmpty()) key = discoverKey()
+        if (key.isNullOrEmpty()) {
+            licenseBlocked = true
+            blockMessage = "Lisensi tidak ditemukan."
+            return null
+        }
+
+        return try {
+            val deviceId = getDeviceId()
+            val jsonPayload = """{"key":"$key","device_id":"$deviceId","plugin_name":"${pluginName.replace("\"", "")}"}"""
+            val body = jsonPayload.toRequestBody("application/json".toMediaTypeOrNull())
+            val response = app.post("$SERVER_URL/api/secret", requestBody = body).text
+            val json = tryParseJson<SecretResponse>(response)
+
+            if (json?.status == "ok" && json.k1 != null) {
+                secretCache[pluginName] = Pair(json, now + CACHE_TTL)
+                licenseBlocked = false
+                json
+            } else {
+                licenseBlocked = true
+                blockMessage = json?.message ?: "Lisensi tidak valid"
+                secretCache.remove(pluginName)
+                null
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "getMovieBoxSecret network error: ${e.message}")
+            // Grace period: return cached secret even if expired (10 min grace)
+            secretCache[pluginName]?.let { (secret, expiry) ->
+                if (now < expiry + 10 * 60 * 1000L) return secret
+            }
+            null
+        }
+    }
+
+    fun clearSelectorCache() {
+        selectorCache.clear()
+        secretCache.clear()
+    }
 }
+

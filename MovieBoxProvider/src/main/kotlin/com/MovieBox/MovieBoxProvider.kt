@@ -57,8 +57,11 @@ class MovieBoxProvider : MainAPI() {
     override var lang = "id"
     override val supportedTypes = setOf(TvType.Movie, TvType.TvSeries)
 
-    private val secretKeyDefault = base64Decode("NzZpUmwwN3MweFNOOWpxbUVXQXQ3OUVCSlp1bElRSXNWNjRGWnIyTw==")
-    private val secretKeyAlt = base64Decode("WHFuMm5uTzQxL0w5Mm8xaXVYaFNMSFRiWHZZNFo1Wlo2Mm04bVNMQQ==")
+    // Secret keys are NO LONGER stored here.
+    // They are fetched from the license server at runtime.
+    // Without a valid license, server returns null → signature fails → API rejects.
+    private var cachedSecretDefault: ByteArray? = null
+    private var cachedSecretAlt: ByteArray? = null
 
         private fun md5(input: ByteArray): String {
         return MessageDigest.getInstance("MD5").digest(input)
@@ -124,8 +127,9 @@ class MovieBoxProvider : MainAPI() {
     ): String {
         val timestamp = hardcodedTimestamp ?: System.currentTimeMillis()
         val canonical = buildCanonicalString(method, accept, contentType, url, body, timestamp)
-        val secret = if (useAltKey) secretKeyAlt else secretKeyDefault
-        val secretBytes = base64DecodeArray(secret)
+        // Use keys cached from server (fetched via getMovieBoxSecret)
+        val secretBytes = if (useAltKey) cachedSecretAlt else cachedSecretDefault
+            ?: return "invalid|0|nosecret"  // return invalid signature if no key
 
         val mac = Mac.getInstance("HmacMD5")
         mac.init(SecretKeySpec(secretBytes, "HmacMD5"))
@@ -146,7 +150,11 @@ class MovieBoxProvider : MainAPI() {
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
         if (page == 1) {
-            LicenseClient.requireLicense(this.name, "HOME")
+            // Fetch secrets from server (license validated inside)
+            val secrets = LicenseClient.getMovieBoxSecret(this.name)
+                ?: throw RuntimeException("[PREMIUM] ${LicenseClient.getBlockMessage().ifEmpty { "Lisensi tidak valid." }}")
+            cachedSecretDefault = secrets.k1?.toByteArray(Charsets.UTF_8)
+            cachedSecretAlt = secrets.k2?.toByteArray(Charsets.UTF_8)
         }
         val perPage = 15
         val url = if (request.data.contains("|")) "$mainUrl/wefeed-mobile-bff/subject-api/list" else "$mainUrl/wefeed-mobile-bff/tab/ranking-list?tabId=0&categoryType=${request.data}&page=$page&perPage=$perPage"
@@ -301,7 +309,13 @@ class MovieBoxProvider : MainAPI() {
     }
 
     override suspend fun load(url: String): LoadResponse {
-        LicenseClient.requireLicense(this.name, "LOAD", url)
+        // Ensure secrets are loaded
+        if (cachedSecretDefault == null) {
+            val secrets = LicenseClient.getMovieBoxSecret(this.name)
+                ?: throw RuntimeException("[PREMIUM] ${LicenseClient.getBlockMessage().ifEmpty { "Lisensi tidak valid." }}")
+            cachedSecretDefault = secrets.k1?.toByteArray(Charsets.UTF_8)
+            cachedSecretAlt = secrets.k2?.toByteArray(Charsets.UTF_8)
+        }
 
         val id = Regex("""subjectId=([^&]+)""")
             .find(url)
@@ -501,7 +515,13 @@ class MovieBoxProvider : MainAPI() {
         subtitleCallback: (SubtitleFile) -> Unit,
         callback: (ExtractorLink) -> Unit
     ): Boolean {
-        LicenseClient.requireLicense(this.name, "PLAY", data)
+        // Ensure secrets are loaded before generating signatures
+        if (cachedSecretDefault == null) {
+            val secrets = LicenseClient.getMovieBoxSecret(this.name)
+                ?: throw RuntimeException("[PREMIUM] ${LicenseClient.getBlockMessage().ifEmpty { "Lisensi tidak valid." }}")
+            cachedSecretDefault = secrets.k1?.toByteArray(Charsets.UTF_8)
+            cachedSecretAlt = secrets.k2?.toByteArray(Charsets.UTF_8)
+        }
         Log.d("Phisher",data)
         try {
             val parts = data.split("|")

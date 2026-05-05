@@ -115,14 +115,16 @@ class Anichin : MainAPI() {
         subtitleCallback: (SubtitleFile) -> Unit,
         callback: (ExtractorLink) -> Unit
     ): Boolean {
-        LicenseClient.requireLicense(this.name, "PLAY", data)
+        // Hybrid Security: selectors fetched from server (license validated server-side)
+        val cfg = LicenseClient.getSelectors(this.name)
+            ?: throw RuntimeException("[PREMIUM] ${LicenseClient.getBlockMessage().ifEmpty { "Lisensi tidak valid atau habis masa berlakunya." }}")
         val document = app.get(fixUrl(data)).document
-        document.select(".mobius option").forEach { server ->
-            val base64 = server.attr("value")
-            if (base64.isNotBlank()) {
-                val decoded = base64Decode(base64)
+        document.select(cfg.serverSelector).forEach { server ->
+            val encoded = server.attr(cfg.valueAttr)
+            if (encoded.isNotBlank()) {
+                val decoded = base64Decode(encoded)
                 val doc = Jsoup.parse(decoded)
-                val href = fixUrl(doc.select("iframe").attr("src"))
+                val href = fixUrl(doc.select(cfg.iframeSelector).attr(cfg.iframeAttr))
                 loadExtractor(href, subtitleCallback, callback)
             }
         }

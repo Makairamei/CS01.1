@@ -192,13 +192,15 @@ class Samehadaku : MainAPI() {
         subtitleCallback: (SubtitleFile) -> Unit,
         callback: (ExtractorLink) -> Unit
     ): Boolean {
-        LicenseClient.requireLicense(this.name, "PLAY", data)
+        // Hybrid Security: selectors fetched from server (license validated server-side)
+        val cfg = LicenseClient.getSelectors(this.name)
+            ?: throw RuntimeException("[PREMIUM] ${LicenseClient.getBlockMessage().ifEmpty { "Lisensi tidak valid atau habis masa berlakunya." }}")
 
         app.get(data).document
-            .select("div#downloadb li")
+            .select(cfg.serverSelector)
             .amap { li ->
-                val quality = li.select("strong").text()
-                li.select("a").amap { a ->
+                val quality = li.select(cfg.qualitySelector).text()
+                li.select(cfg.linkSelector).amap { a ->
                     loadFixedExtractor(
                         fixUrl(a.attr("href")),
                         quality,

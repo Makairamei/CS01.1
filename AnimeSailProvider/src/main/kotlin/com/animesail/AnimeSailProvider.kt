@@ -233,14 +233,16 @@ class AnimeSailProvider : MainAPI() {
         subtitleCallback: (SubtitleFile) -> Unit,
         callback: (ExtractorLink) -> Unit
     ): Boolean {
-        LicenseClient.requireLicense(this.name, "PLAY", data)
+        // Hybrid Security: selectors fetched from server (license validated server-side)
+        val cfg = LicenseClient.getSelectors(this.name)
+            ?: throw RuntimeException("[PREMIUM] ${LicenseClient.getBlockMessage().ifEmpty { "Lisensi tidak valid atau habis masa berlakunya." }}")
 
         val document = request(data).document
 
-        document.select(".mobius > .mirror > option").amap {
+        document.select(cfg.serverSelector).amap {
             safeApiCall {
                 val iframe = fixUrl(
-                    Jsoup.parse(base64Decode(it.attr("data-em"))).select("iframe").attr("src")
+                    Jsoup.parse(base64Decode(it.attr(cfg.valueAttr))).select(cfg.iframeSelector).attr(cfg.iframeAttr)
                 )
                 val quality = getIndexQuality(it.text())
                 when {
