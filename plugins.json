@@ -1,9 +1,10 @@
 [
     {
         "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://anichin.club&size=%size%",
+        "fileHash": "sha256-a00fbd238dcf0b90ac4139851faabbd563b2b49d8fcb67776e66b8a5efb9d460",
         "apiVersion": 1,
-        "repositoryUrl": "https://github.com/GilangAditama/Nontonmovies",
-        "fileSize": 35843,
+        "repositoryUrl": "https://github.com/Makairamei/CS01.1",
+        "fileSize": 52889,
         "status": 1,
         "language": "id",
         "authors": [
@@ -15,18 +16,39 @@
             "Anime",
             "Cartoon"
         ],
-        "version": 25,
+        "version": 125,
         "internalName": "AnichinMoe",
         "description": "Anichin Moe",
-        "url": "https://raw.githubusercontent.com/GilangAditama/Nontonmovies/builds/AnichinMoe.cs3",
+        "url": "http://47.237.190.114:3000/d/AnichinMoe.cs3",
         "name": "AnichinMoe"
     },
     {
-        "iconUrl": "https://animekhor.org/wp-content/uploads/2021/11/AnimeKhor_darkmode.png",
-        "jarFileSize": 84541,
+        "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://v1.animasu.top&size=%size%",
+        "fileHash": "sha256-8a0e3009238681c2f1fd02e09fffb69af93dfd389fdd1e056d2d3b7593ab2921",
         "apiVersion": 1,
-        "repositoryUrl": "https://github.com/GilangAditama/Nontonmovies",
-        "fileSize": 21616,
+        "repositoryUrl": "https://github.com/Makairamei/CS01.1",
+        "fileSize": 39619,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Hexated"
+        ],
+        "tvTypes": [
+            "AnimeMovie",
+            "OVA",
+            "Anime"
+        ],
+        "version": 102,
+        "internalName": "Animasu",
+        "url": "http://47.237.190.114:3000/d/Animasu.cs3",
+        "name": "Animasu"
+    },
+    {
+        "iconUrl": "https://animekhor.org/wp-content/uploads/2021/11/AnimeKhor_darkmode.png",
+        "fileHash": "sha256-b12bb6c17cbb309ef895308f63832180d909b092a415a5b0b0b42bf59c05f9e9",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Makairamei/CS01.1",
+        "fileSize": 34277,
         "status": 1,
         "language": "id",
         "authors": [
@@ -36,21 +58,42 @@
             "AnimeMovie",
             "Anime"
         ],
-        "version": 8,
+        "version": 108,
         "internalName": "Animekhor",
-        "jarUrl": "https://raw.githubusercontent.com/GilangAditama/Nontonmovies/builds/Animekhor.jar",
         "description": "Anime and Movies",
-        "url": "https://raw.githubusercontent.com/GilangAditama/Nontonmovies/builds/Animekhor.cs3",
+        "url": "http://47.237.190.114:3000/d/Animekhor.cs3",
         "name": "Animekhor"
     },
     {
-        "iconUrl": "https://animexin.dev/wp-content/uploads/2020/06/animexinv1.png",
-        "jarFileSize": 56906,
+        "iconUrl": "https://aghanim.xyz/wp-content/themes/animesail/assets/images/ico.png",
+        "fileHash": "sha256-ab6b06543ac7620cc6ac4a537f48760e5c8a62c53679f64f7c6670cfb5d981fb",
         "apiVersion": 1,
-        "repositoryUrl": "https://github.com/GilangAditama/Nontonmovies",
-        "fileSize": 14968,
+        "repositoryUrl": "https://github.com/Makairamei/CS01.1",
+        "fileSize": 38074,
         "status": 1,
         "language": "id",
+        "authors": [
+            "Hann"
+        ],
+        "tvTypes": [
+            "AnimeMovie",
+            "Anime",
+            "OVA"
+        ],
+        "version": 103,
+        "internalName": "AnimeSailProvider",
+        "description": "AnimeSail — Streaming Anime, Donghua Subtitle Indonesia",
+        "url": "http://47.237.190.114:3000/d/AnimeSailProvider.cs3",
+        "name": "AnimeSailProvider"
+    },
+    {
+        "iconUrl": "https://animexin.dev/wp-content/uploads/2020/06/animexinv1.png",
+        "fileHash": "sha256-2aa0246d7ece566e229f0e0a8bf035af4ca114c1391c7a64c65f35b2f88374ed",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Makairamei/CS01.1",
+        "fileSize": 27839,
+        "status": 1,
+        "language": "en",
         "authors": [
             "Phisher98"
         ],
@@ -59,19 +102,126 @@
             "Anime",
             "Cartoon"
         ],
-        "version": 9,
+        "version": 109,
         "internalName": "Animexin",
-        "jarUrl": "https://raw.githubusercontent.com/GilangAditama/Nontonmovies/builds/Animexin.jar",
         "description": "Anime and Movies",
-        "url": "https://raw.githubusercontent.com/GilangAditama/Nontonmovies/builds/Animexin.cs3",
+        "url": "http://47.237.190.114:3000/d/Animexin.cs3",
         "name": "Animexin"
     },
     {
-        "iconUrl": "https://raw.githubusercontent.com/Kohi-den/extensions-source/927f9c68fd64ce52f6212ae633d0f0585eca3545/src/en/donghuastream/res/mipmap-xxxhdpi/ic_launcher.png",
-        "jarFileSize": 181371,
+        "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://anoboy.be&size=%size%",
+        "fileHash": "sha256-f1b9d2ca136a82764c5a36880760caa701cfb670271908d110c8d8d2faff835b",
         "apiVersion": 1,
-        "repositoryUrl": "https://github.com/GilangAditama/Nontonmovies",
-        "fileSize": 37928,
+        "repositoryUrl": "https://github.com/Makairamei/CS01.1",
+        "fileSize": 69910,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Duro92"
+        ],
+        "tvTypes": [
+            "AnimeMovie",
+            "OVA",
+            "Anime"
+        ],
+        "version": 103,
+        "internalName": "Anoboy",
+        "description": "Anoboy",
+        "url": "http://47.237.190.114:3000/d/Anoboy.cs3",
+        "name": "Anoboy"
+    },
+    {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=auratail.vip&sz=%size%",
+        "fileHash": "sha256-f7986080429d8391a6ec0abe7d52e5cbfdda5b102e63fb5797d79845c9e8ea42",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Makairamei/CS01.1",
+        "fileSize": 29597,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Zephyra77"
+        ],
+        "tvTypes": [
+            "AnimeMovie",
+            "Anime"
+        ],
+        "version": 114,
+        "internalName": "Auratail",
+        "description": "Streaming anime dan donghua dari Auratail",
+        "url": "http://47.237.190.114:3000/d/Auratail.cs3",
+        "name": "Auratail"
+    },
+    {
+        "iconUrl": "https://play-lh.googleusercontent.com/G9s84Cm1TDnKDX2P8nipS_s60cuCnYtjBRRLespF8nivjXmbV9tF1fY37clZhXMLaA",
+        "fileHash": "sha256-e52dbbc97bbba59a2000e9893b2e868e86347fbb9b304650dfa9b25718d9fd3d",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Makairamei/CS01.1",
+        "fileSize": 90915,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "NivinCNC,CodeSanz"
+        ],
+        "tvTypes": [
+            "Anime",
+            "Movies",
+            "TvSeries",
+            "Documentary"
+        ],
+        "version": 101,
+        "internalName": "BstationProvider",
+        "description": "Bstation - International streaming platform for anime, movies, and variety shows (bilibili.tv)",
+        "url": "http://47.237.190.114:3000/d/BstationProvider.cs3",
+        "name": "BstationProvider"
+    },
+    {
+        "iconUrl": "https://raw.githubusercontent.com/phisher98/TVVVV/refs/heads/main/Icons/Cinemacity.png",
+        "fileHash": "sha256-4863bbc91e259aad6a824369e34afada419992b5229bf4aa947745add3ce8a86",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Makairamei/CS01.1",
+        "fileSize": 51701,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Sanzz"
+        ],
+        "tvTypes": [
+            "Movie",
+            "TvSeries"
+        ],
+        "version": 104,
+        "internalName": "Cinemacity",
+        "description": "Watch Movies & TvSeries (Multi-Lang/Audio)",
+        "url": "http://47.237.190.114:3000/d/Cinemacity.cs3",
+        "name": "Cinemacity"
+    },
+    {
+        "iconUrl": "https://i.postimg.cc/TYKyC16H/images.png",
+        "fileHash": "sha256-9b27cd517910edfa28e5a050e9846a8ae92c280aea6d01a27f31d09bc60af9ee",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Makairamei/CS01.1",
+        "fileSize": 45761,
+        "status": 1,
+        "language": "en",
+        "authors": [
+            "horis"
+        ],
+        "tvTypes": [
+            "Movie",
+            "TvSeries"
+        ],
+        "version": 142,
+        "internalName": "Disney Plus",
+        "description": "Disney+ Multiple Languages",
+        "url": "http://47.237.190.114:3000/d/Disney Plus.cs3",
+        "name": "Disney Plus"
+    },
+    {
+        "iconUrl": "https://raw.githubusercontent.com/Kohi-den/extensions-source/927f9c68fd64ce52f6212ae633d0f0585eca3545/src/en/donghuastream/res/mipmap-xxxhdpi/ic_launcher.png",
+        "fileHash": "sha256-abd796b5008ab7eef385bae5e9a436a2fbd840f95b06e07f3a7dae0d8f0d5de4",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Makairamei/CS01.1",
+        "fileSize": 50861,
         "status": 1,
         "language": "id",
         "authors": [
@@ -80,18 +230,18 @@
         "tvTypes": [
             "Anime"
         ],
-        "version": 14,
+        "version": 115,
         "internalName": "Donghuastream",
-        "jarUrl": "https://raw.githubusercontent.com/GilangAditama/Nontonmovies/builds/Donghuastream.jar",
         "description": "Contains SeaTV (Chinese)",
-        "url": "https://raw.githubusercontent.com/GilangAditama/Nontonmovies/builds/Donghuastream.cs3",
+        "url": "http://47.237.190.114:3000/d/Donghuastream.cs3",
         "name": "Donghuastream"
     },
     {
         "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://donghub.vip&size=%size%",
+        "fileHash": "sha256-0e9cf266295adc4960dd3d0a48cdbf1b71ab5a156152f7350bc0ef7a1314efa0",
         "apiVersion": 1,
-        "repositoryUrl": "https://github.com/GilangAditama/Nontonmovies",
-        "fileSize": 22115,
+        "repositoryUrl": "https://github.com/Makairamei/CS01.1",
+        "fileSize": 34232,
         "status": 1,
         "language": "id",
         "authors": [
@@ -103,17 +253,104 @@
             "Anime",
             "Cartoon"
         ],
-        "version": 6,
+        "version": 106,
         "internalName": "Donghub",
         "description": "Anime and Movies",
-        "url": "https://raw.githubusercontent.com/GilangAditama/Nontonmovies/builds/Donghub.cs3",
+        "url": "http://47.237.190.114:3000/d/Donghub.cs3",
         "name": "Donghub"
     },
     {
-        "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://justilien.com&size=%size%",
+        "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://db.hafizhibnusyam.my.id&size=%size%",
+        "fileHash": "sha256-13da128a90641c0995805d5c62082bfdf75da704f843bca1c939967c1f5faeef",
         "apiVersion": 1,
-        "repositoryUrl": "https://github.com/GilangAditama/Nontonmovies",
-        "fileSize": 35780,
+        "repositoryUrl": "https://github.com/Makairamei/CS01.1",
+        "fileSize": 41209,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Duro92"
+        ],
+        "tvTypes": [
+            "TvSeries",
+            "AsianDrama"
+        ],
+        "version": 103,
+        "internalName": "Dramabox",
+        "description": "DramaBox API",
+        "url": "http://47.237.190.114:3000/d/Dramabox.cs3",
+        "name": "Dramabox"
+    },
+    {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=dramafull.cc&sz=%size%",
+        "fileHash": "sha256-a51c2cd695cad2fb016f86cf8af306f4af8c4411e827e4acc41bed606c43306d",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Makairamei/CS01.1",
+        "fileSize": 33289,
+        "status": 1,
+        "language": "en",
+        "authors": [
+            "Phisher98"
+        ],
+        "tvTypes": [
+            "AsianDrama",
+            "TvSeries",
+            "Movie"
+        ],
+        "version": 101,
+        "internalName": "DramaFull",
+        "description": "Kdramas and Movies",
+        "url": "http://47.237.190.114:3000/d/DramaFull.cs3",
+        "name": "DramaFull"
+    },
+    {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=dramaid.asia&sz=%size%",
+        "fileHash": "sha256-d50e323c3274e1b6b6e8c1d6a65744cd91cdcd989adf6c29c4ec1be975b8fbce",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Makairamei/CS01.1",
+        "fileSize": 31602,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Sanzz"
+        ],
+        "tvTypes": [
+            "AsianDrama",
+            "Movie"
+        ],
+        "version": 102,
+        "internalName": "DramaidProvider",
+        "description": "Daramaid",
+        "url": "http://47.237.190.114:3000/d/DramaidProvider.cs3",
+        "name": "DramaidProvider"
+    },
+    {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=www.dubbindo.xyz&sz=%size%",
+        "fileHash": "sha256-d278695d6cc75e9e4bf2df42bf25b9f3b9dd0293b695042a7af1ebd3db2405f4",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Makairamei/CS01.1",
+        "fileSize": 27208,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "CodeSanzz"
+        ],
+        "tvTypes": [
+            "TvSeries",
+            "Movie",
+            "Cartoon",
+            "Anime"
+        ],
+        "version": 110,
+        "internalName": "Dubbindo",
+        "url": "http://47.237.190.114:3000/d/Dubbindo.cs3",
+        "name": "Dubbindo"
+    },
+    {
+        "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://justilien.com&size=%size%",
+        "fileHash": "sha256-a9b76f788a1d0aa91f2409db9a6b3609073816a73377bf3b70755301c173b38d",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Makairamei/CS01.1",
+        "fileSize": 47720,
         "status": 1,
         "language": "id",
         "authors": [
@@ -124,17 +361,18 @@
             "TvSeries",
             "Movie"
         ],
-        "version": 16,
+        "version": 116,
         "internalName": "Dutamovie",
         "description": "DutaMovie",
-        "url": "https://raw.githubusercontent.com/GilangAditama/Nontonmovies/builds/Dutamovie.cs3",
+        "url": "http://47.237.190.114:3000/d/Dutamovie.cs3",
         "name": "Dutamovie"
     },
     {
         "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://filmapik.singles&size=%size%",
+        "fileHash": "sha256-c03b27ac68feccfea0acf4505faf5c612a96429d4a62f75ad5df26b5e9a3ef0c",
         "apiVersion": 1,
-        "repositoryUrl": "https://github.com/GilangAditama/Nontonmovies",
-        "fileSize": 21965,
+        "repositoryUrl": "https://github.com/Makairamei/CS01.1",
+        "fileSize": 39236,
         "status": 1,
         "language": "id",
         "authors": [
@@ -146,17 +384,81 @@
             "TvSeries",
             "Movie"
         ],
-        "version": 2,
+        "version": 103,
         "internalName": "FilmApik",
         "description": "Filmapik",
-        "url": "https://raw.githubusercontent.com/GilangAditama/Nontonmovies/builds/FilmApik.cs3",
+        "url": "http://47.237.190.114:3000/d/FilmApik.cs3",
         "name": "FilmApik"
     },
     {
-        "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://fufafilm.com&size=%size%",
+        "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://justilien.com&size=%size%",
+        "fileHash": "sha256-ac69a2e0bc5e0ecec80f98cbf50b4d0014b4a2c7092d0e3e6549ff6da726486e",
         "apiVersion": 1,
-        "repositoryUrl": "https://github.com/GilangAditama/Nontonmovies",
-        "fileSize": 28846,
+        "repositoryUrl": "https://github.com/Makairamei/CS01.1",
+        "fileSize": 34584,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "CodeSanz"
+        ],
+        "tvTypes": [
+            "AsianDrama",
+            "TvSeries",
+            "Movie"
+        ],
+        "version": 101,
+        "internalName": "FilmKita",
+        "url": "http://47.237.190.114:3000/d/FilmKita.cs3",
+        "name": "FilmKita"
+    },
+    {
+        "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://flickreels-streaming.vercel.app&size=%size%",
+        "fileHash": "sha256-57f6afb3b8b5ccc40f7a950784dc1463557a403031d442c3340ef6a63821f28f",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Makairamei/CS01.1",
+        "fileSize": 34766,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Duro92"
+        ],
+        "tvTypes": [
+            "TvSeries",
+            "AsianDrama"
+        ],
+        "version": 101,
+        "internalName": "Flickreels",
+        "description": "FlickReels",
+        "url": "http://47.237.190.114:3000/d/Flickreels.cs3",
+        "name": "Flickreels"
+    },
+    {
+        "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://free-reels.com&size=%size%",
+        "fileHash": "sha256-e4c4fb13ec491d53ad70955f749aae3b8ae9835103a65c0cec5d4ed26f88eb45",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Makairamei/CS01.1",
+        "fileSize": 68092,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "duro92"
+        ],
+        "tvTypes": [
+            "TvSeries",
+            "AsianDrama"
+        ],
+        "version": 101,
+        "internalName": "FreeReels",
+        "description": "FreeReels short drama provider",
+        "url": "http://47.237.190.114:3000/d/FreeReels.cs3",
+        "name": "FreeReels"
+    },
+    {
+        "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://fufafilm.com&size=%size%",
+        "fileHash": "sha256-ff0cb78e550c451d925132ebd5a40ad6d36fccb531029c850c1332968963f7a9",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Makairamei/CS01.1",
+        "fileSize": 43201,
         "status": 1,
         "language": "id",
         "authors": [
@@ -167,18 +469,125 @@
             "TvSeries",
             "Movie"
         ],
-        "version": 3,
+        "version": 103,
         "internalName": "Fufafilm",
         "description": "Fufafilm",
-        "url": "https://raw.githubusercontent.com/GilangAditama/Nontonmovies/builds/Fufafilm.cs3",
+        "url": "http://47.237.190.114:3000/d/Fufafilm.cs3",
         "name": "Fufafilm"
     },
     {
-        "iconUrl": "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://idlixian.com&size=16",
-        "jarFileSize": 113266,
+        "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://funmovieslix.com&size=%size%",
+        "fileHash": "sha256-7d356073e37898cb326611f3b7f90c4e89a711cc23cb4825a57dd66212cd2744",
         "apiVersion": 1,
-        "repositoryUrl": "https://github.com/GilangAditama/Nontonmovies",
-        "fileSize": 29959,
+        "repositoryUrl": "https://github.com/Makairamei/CS01.1",
+        "fileSize": 33716,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Phisher98"
+        ],
+        "tvTypes": [
+            "Movie",
+            "TvSeries"
+        ],
+        "version": 102,
+        "internalName": "Funmovieslix",
+        "description": "Indonesia Source",
+        "url": "http://47.237.190.114:3000/d/Funmovieslix.cs3",
+        "name": "Funmovieslix"
+    },
+    {
+        "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://gojodesu.com&size=%size%",
+        "fileHash": "sha256-f09d70b58001f7ae1bcc10f59cb0cd8a146d498074e5ec9fa2b55914188d7de6",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Makairamei/CS01.1",
+        "fileSize": 89599,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Duro92"
+        ],
+        "tvTypes": [
+            "AnimeMovie",
+            "OVA",
+            "Anime"
+        ],
+        "version": 101,
+        "internalName": "Gojodesu",
+        "description": "Gojodesu",
+        "url": "http://47.237.190.114:3000/d/Gojodesu.cs3",
+        "name": "Gojodesu"
+    },
+    {
+        "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://goodshort-streaming.vercel.app&size=%size%",
+        "fileHash": "sha256-0e352a57af983b8746871bfa0792386ebee4f1c3c329b3de387ba4eb2af2f132",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Makairamei/CS01.1",
+        "fileSize": 35857,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Duro92"
+        ],
+        "tvTypes": [
+            "TvSeries",
+            "AsianDrama"
+        ],
+        "version": 101,
+        "internalName": "Goodshort",
+        "description": "GoodShort",
+        "url": "http://47.237.190.114:3000/d/Goodshort.cs3",
+        "name": "Goodshort"
+    },
+    {
+        "iconUrl": "https://images.dwncdn.net/images/t_app-icon-l/p/b0c9663c-0d61-4941-b12f-91c58c06189f/1137087733/hdo-box-logo",
+        "fileHash": "sha256-036deba404997f61f1495ba1cf1d10455545b6bfcd58656ac5a8cb32dff9a062",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Makairamei/CS01.1",
+        "fileSize": 39019,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "NivinCNC, CodeSanz"
+        ],
+        "tvTypes": [
+            "Movies",
+            "TvSeries"
+        ],
+        "version": 104,
+        "internalName": "HDOProvider",
+        "description": "HDO provider",
+        "url": "http://47.237.190.114:3000/d/HDOProvider.cs3",
+        "name": "HDOProvider"
+    },
+    {
+        "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://v2.hidoristream.online&size=%size%",
+        "fileHash": "sha256-189df3355ee57cd481c89b536637c03899ab88d98f8e9e4cd8ab56ca45d52cf8",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Makairamei/CS01.1",
+        "fileSize": 48043,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Duro92"
+        ],
+        "tvTypes": [
+            "AnimeMovie",
+            "OVA",
+            "Anime"
+        ],
+        "version": 101,
+        "internalName": "Hidoristream",
+        "description": "Hidoristream",
+        "url": "http://47.237.190.114:3000/d/Hidoristream.cs3",
+        "name": "Hidoristream"
+    },
+    {
+        "iconUrl": "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://idlixian.com&size=16",
+        "fileHash": "sha256-e3bbe6cf4c5c84bada02091842438cc2c9a34cc33863ba27786786945f2b116a",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Makairamei/CS01.1",
+        "fileSize": 38043,
         "status": 1,
         "language": "id",
         "authors": [
@@ -190,17 +599,17 @@
             "Anime",
             "AsianDrama"
         ],
-        "version": 6,
+        "version": 106,
         "internalName": "IdlixProvider",
-        "jarUrl": "https://raw.githubusercontent.com/GilangAditama/Nontonmovies/builds/IdlixProvider.jar",
-        "url": "https://raw.githubusercontent.com/GilangAditama/Nontonmovies/builds/IdlixProvider.cs3",
+        "url": "http://47.237.190.114:3000/d/IdlixProvider.cs3",
         "name": "IdlixProvider"
     },
     {
         "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://tv2.kawanfilm21.co&size=%size%",
+        "fileHash": "sha256-146c5c8f9f5f39ce54c425ac78df14e58a05da31ba2a2b85458ce19bdaf73709",
         "apiVersion": 1,
-        "repositoryUrl": "https://github.com/GilangAditama/Nontonmovies",
-        "fileSize": 27905,
+        "repositoryUrl": "https://github.com/Makairamei/CS01.1",
+        "fileSize": 39989,
         "status": 1,
         "language": "id",
         "authors": [
@@ -211,18 +620,61 @@
             "TvSeries",
             "Movie"
         ],
-        "version": 5,
+        "version": 105,
         "internalName": "Kawanfilm",
         "description": "Kawanfilm",
-        "url": "https://raw.githubusercontent.com/GilangAditama/Nontonmovies/builds/Kawanfilm.cs3",
+        "url": "http://47.237.190.114:3000/d/Kawanfilm.cs3",
         "name": "Kawanfilm"
     },
     {
-        "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://kisskh.ovh&size=%size%",
-        "jarFileSize": 116251,
+        "iconUrl": "https://raw.githubusercontent.com/phisher98/TVVVV/refs/heads/main/Icons/KAA.png",
+        "fileHash": "sha256-2f0363f4e67207a91c5693b76943c73ccea6b63e3dc54ef7a57f4575ae39d0ea",
         "apiVersion": 1,
-        "repositoryUrl": "https://github.com/GilangAditama/Nontonmovies",
-        "fileSize": 28041,
+        "repositoryUrl": "https://github.com/Makairamei/CS01.1",
+        "fileSize": 62634,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Phisher98,Hexated"
+        ],
+        "tvTypes": [
+            "AnimeMovie",
+            "Anime",
+            "OVA"
+        ],
+        "version": 120,
+        "internalName": "Kickassanime",
+        "url": "http://47.237.190.114:3000/d/Kickassanime.cs3",
+        "name": "Kickassanime"
+    },
+    {
+        "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://kissasian.cam&size=%size%",
+        "fileHash": "sha256-205dfa20624ae6a3716ee8f9f5e67b5d1b07bb169d73a42aa9c6e94d0f756d46",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Makairamei/CS01.1",
+        "fileSize": 44387,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Duro92"
+        ],
+        "tvTypes": [
+            "AsianDrama",
+            "TvSeries",
+            "Movie"
+        ],
+        "version": 104,
+        "internalName": "Kissasian",
+        "description": "Kissasian",
+        "url": "http://47.237.190.114:3000/d/Kissasian.cs3",
+        "name": "Kissasian"
+    },
+    {
+        "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://kisskh.ovh&size=%size%",
+        "fileHash": "sha256-bca0f18f6525e465ba0055d3258f3ef5e5171577c1cf8deec0e2234c64d012ea",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Makairamei/CS01.1",
+        "fileSize": 39269,
         "status": 1,
         "language": "id",
         "authors": [
@@ -234,17 +686,17 @@
             "Anime",
             "Movie"
         ],
-        "version": 16,
+        "version": 116,
         "internalName": "KisskhProvider",
-        "jarUrl": "https://raw.githubusercontent.com/GilangAditama/Nontonmovies/builds/KisskhProvider.jar",
-        "url": "https://raw.githubusercontent.com/GilangAditama/Nontonmovies/builds/KisskhProvider.cs3",
+        "url": "http://47.237.190.114:3000/d/KisskhProvider.cs3",
         "name": "KisskhProvider"
     },
     {
         "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://klikxxi.fit&size=%size%",
+        "fileHash": "sha256-c7922bb423c69d5c93b2d3a4c34d635fa742339e93beb04d4a6ebe9e9d7cf07d",
         "apiVersion": 1,
-        "repositoryUrl": "https://github.com/GilangAditama/Nontonmovies",
-        "fileSize": 24147,
+        "repositoryUrl": "https://github.com/Makairamei/CS01.1",
+        "fileSize": 36080,
         "status": 1,
         "language": "id",
         "authors": [
@@ -254,18 +706,82 @@
             "TvSeries",
             "Movie"
         ],
-        "version": 9,
+        "version": 109,
         "internalName": "Klikxxi",
         "description": "Klikxxi",
-        "url": "https://raw.githubusercontent.com/GilangAditama/Nontonmovies/builds/Klikxxi.cs3",
+        "url": "http://47.237.190.114:3000/d/Klikxxi.cs3",
         "name": "Klikxxi"
     },
     {
-        "iconUrl": "https://www.google.com/s2/favicons?domain=tv7.lk21.am.in&sz=%size%",
-        "jarFileSize": 96466,
+        "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://v17.kuramanime.ink&size=%size%",
+        "fileHash": "sha256-7d15d73aed838cb77f3e88eab6d7a677cf4ee92c7a3f83cd6bb9995f15d343bb",
         "apiVersion": 1,
-        "repositoryUrl": "https://github.com/GilangAditama/Nontonmovies",
-        "fileSize": 26243,
+        "repositoryUrl": "https://github.com/Makairamei/CS01.1",
+        "fileSize": 60308,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Sanzz"
+        ],
+        "tvTypes": [
+            "Anime",
+            "AnimeMovie",
+            "OVA"
+        ],
+        "version": 101,
+        "internalName": "Kuramanime",
+        "url": "http://47.237.190.114:3000/d/Kuramanime.cs3",
+        "name": "Kuramanime"
+    },
+    {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=45.12.2.2&sz=%size%",
+        "fileHash": "sha256-a7a97e7a337bedcfdce137b95741a33b22494d3e75452e21881bc71357ee0af7",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Makairamei/CS01.1",
+        "fileSize": 37447,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Hexated"
+        ],
+        "tvTypes": [
+            "AnimeMovie",
+            "Anime",
+            "OVA"
+        ],
+        "version": 121,
+        "internalName": "KuronimeProvider",
+        "url": "http://47.237.190.114:3000/d/KuronimeProvider.cs3",
+        "name": "KuronimeProvider"
+    },
+    {
+        "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://layarasia.site&size=%size%",
+        "fileHash": "sha256-6bce748cb058d39f23b998ad1248c8b64fca9bf512b43fe0b95b8d1667215954",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Makairamei/CS01.1",
+        "fileSize": 40038,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Duro92"
+        ],
+        "tvTypes": [
+            "AsianDrama",
+            "TvSeries",
+            "Movie"
+        ],
+        "version": 102,
+        "internalName": "Layarasia",
+        "description": "Layarasia",
+        "url": "http://47.237.190.114:3000/d/Layarasia.cs3",
+        "name": "Layarasia"
+    },
+    {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=tv7.lk21.am.in&sz=%size%",
+        "fileHash": "sha256-17e754e7a7fb06cb07af1cc61a2d517b197fc5ea11dc3fc523b6d1c72fe31ccd",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Makairamei/CS01.1",
+        "fileSize": 38520,
         "status": 1,
         "language": "id",
         "authors": [
@@ -276,17 +792,39 @@
             "TvSeries",
             "Movie"
         ],
-        "version": 10,
+        "version": 111,
         "internalName": "LayarKacaProvider",
-        "jarUrl": "https://raw.githubusercontent.com/GilangAditama/Nontonmovies/builds/LayarKacaProvider.jar",
-        "url": "https://raw.githubusercontent.com/GilangAditama/Nontonmovies/builds/LayarKacaProvider.cs3",
+        "url": "http://47.237.190.114:3000/d/LayarKacaProvider.cs3",
         "name": "LayarKacaProvider"
     },
     {
-        "iconUrl": "https://github.com/NivinCNC/CNCVerse-Cloud-Stream-Extension/raw/refs/heads/master/MovieBoxProvider/icon.png",
+        "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://tv11.melongmovies.com&size=%size%",
+        "fileHash": "sha256-950ba1a5be60f0bfa40306d2d1fe93be89d34dcd8aece58cd54467a3bc5453af",
         "apiVersion": 1,
-        "repositoryUrl": "https://github.com/GilangAditama/Nontonmovies",
-        "fileSize": 33622,
+        "repositoryUrl": "https://github.com/Makairamei/CS01.1",
+        "fileSize": 37846,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Duro92"
+        ],
+        "tvTypes": [
+            "AsianDrama",
+            "TvSeries",
+            "Movie"
+        ],
+        "version": 109,
+        "internalName": "Melongmovie",
+        "description": "Melongmovie",
+        "url": "http://47.237.190.114:3000/d/Melongmovie.cs3",
+        "name": "Melongmovie"
+    },
+    {
+        "iconUrl": "https://github.com/NivinCNC/CNCVerse-Cloud-Stream-Extension/raw/refs/heads/master/MovieBoxProvider/icon.png",
+        "fileHash": "sha256-46b2aec8d0a7a8abc9c81fbb0b01938f08ed2f90744a107b8b86ce03e041bf1e",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Makairamei/CS01.1",
+        "fileSize": 78867,
         "status": 1,
         "language": "id",
         "authors": [
@@ -296,17 +834,18 @@
             "Movie",
             "TvSeries"
         ],
-        "version": 6,
+        "version": 111,
         "internalName": "MovieBoxProvider",
         "description": "Multi Language Movies and Series Provider",
-        "url": "https://raw.githubusercontent.com/GilangAditama/Nontonmovies/builds/MovieBoxProvider.cs3",
+        "url": "http://47.237.190.114:3000/d/MovieBoxProvider.cs3",
         "name": "MovieBoxProvider"
     },
     {
         "iconUrl": "https://github.com/SaurabhKaperwan/CSX/raw/refs/heads/master/NetflixMirrorProvider/icon.png",
+        "fileHash": "sha256-b72b2b4b833c60a5c3a05ef5b4187e1c685398a56add05c03d40b33d9d1ec9fa",
         "apiVersion": 1,
-        "repositoryUrl": "https://github.com/GilangAditama/Nontonmovies",
-        "fileSize": 54916,
+        "repositoryUrl": "https://github.com/Makairamei/CS01.1",
+        "fileSize": 69084,
         "status": 1,
         "authors": [
             "megix"
@@ -317,17 +856,18 @@
             "AsianDrama",
             "Anime"
         ],
-        "version": 44,
+        "version": 145,
         "internalName": "NetflixMirrorProvider",
-        "description": "Netflix, PrimeVideo, JioHotstar(Hotstar, Disney, Paramount, HBO, Peacock) Content in Multiple Languages",
-        "url": "https://raw.githubusercontent.com/GilangAditama/Nontonmovies/builds/NetflixMirrorProvider.cs3",
+        "description": "Netflix, PrimeVideo(Lionsgate), JioHotstar(Hotstar, Disney, Paramount, HBO, Peacock) Content in Multiple Languages",
+        "url": "http://47.237.190.114:3000/d/NetflixMirrorProvider.cs3",
         "name": "NetflixMirrorProvider"
     },
     {
         "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://new18.ngefilm.site&size=%size%",
+        "fileHash": "sha256-8e46178981201865f521630f59ffcee8f955b1818bb35827341019ff8b041ad6",
         "apiVersion": 1,
-        "repositoryUrl": "https://github.com/GilangAditama/Nontonmovies",
-        "fileSize": 26855,
+        "repositoryUrl": "https://github.com/Makairamei/CS01.1",
+        "fileSize": 39082,
         "status": 1,
         "language": "id",
         "authors": [
@@ -338,17 +878,39 @@
             "TvSeries",
             "Movie"
         ],
-        "version": 9,
+        "version": 111,
         "internalName": "Ngefilm",
         "description": "Ngefilm",
-        "url": "https://raw.githubusercontent.com/GilangAditama/Nontonmovies/builds/Ngefilm.cs3",
+        "url": "http://47.237.190.114:3000/d/Ngefilm.cs3",
         "name": "Ngefilm"
     },
     {
-        "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://nomat.site&size=%size%",
+        "iconUrl": "https://www.google.com/s2/favicons?domain=nimegami.id&sz=%size%",
+        "fileHash": "sha256-82084ac7e84e34ee24ca1aeee8fdf600a6e8e4ae5eef0864d120abba47a9912a",
         "apiVersion": 1,
-        "repositoryUrl": "https://github.com/GilangAditama/Nontonmovies",
-        "fileSize": 20666,
+        "repositoryUrl": "https://github.com/Makairamei/CS01.1",
+        "fileSize": 35444,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Hexated"
+        ],
+        "tvTypes": [
+            "AnimeMovie",
+            "Anime",
+            "OVA"
+        ],
+        "version": 113,
+        "internalName": "Nimegami",
+        "url": "http://47.237.190.114:3000/d/Nimegami.cs3",
+        "name": "Nimegami"
+    },
+    {
+        "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://nomat.site&size=%size%",
+        "fileHash": "sha256-719b9b5c535c6c1c0ff4e09002e7d627e03c870f5e4ea789f4569ebd219c4b5a",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Makairamei/CS01.1",
+        "fileSize": 32697,
         "status": 1,
         "language": "id",
         "authors": [
@@ -359,18 +921,39 @@
             "TvSeries",
             "Movie"
         ],
-        "version": 4,
+        "version": 104,
         "internalName": "Nomat",
         "description": "Nomat",
-        "url": "https://raw.githubusercontent.com/GilangAditama/Nontonmovies/builds/Nomat.cs3",
+        "url": "http://47.237.190.114:3000/d/Nomat.cs3",
         "name": "Nomat"
     },
     {
-        "iconUrl": "https://www.google.com/s2/favicons?domain=onetouchtv.xyz/&sz=%size%",
-        "jarFileSize": 166601,
+        "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://s11.nontonanimeid.boats&size=%size%",
+        "fileHash": "sha256-d7b206903be2a88377224b363e5ba2bf4478d95b912a7c2ccd587b1959d7d41f",
         "apiVersion": 1,
-        "repositoryUrl": "https://github.com/GilangAditama/Nontonmovies",
-        "fileSize": 37389,
+        "repositoryUrl": "https://github.com/Makairamei/CS01.1",
+        "fileSize": 72253,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Hexated, Duro92"
+        ],
+        "tvTypes": [
+            "AnimeMovie",
+            "Anime",
+            "OVA"
+        ],
+        "version": 123,
+        "internalName": "NontonAnimeIDProvider",
+        "url": "http://47.237.190.114:3000/d/NontonAnimeIDProvider.cs3",
+        "name": "NontonAnimeIDProvider"
+    },
+    {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=onetouchtv.xyz/&sz=%size%",
+        "fileHash": "sha256-bf555f30573d0a5a878479809f4d3f18d4044a0966b9d3b1e13f967b9b25f126",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Makairamei/CS01.1",
+        "fileSize": 48934,
         "status": 1,
         "language": "en",
         "authors": [
@@ -380,18 +963,18 @@
             "AsianDrama",
             "TvSeries"
         ],
-        "version": 1,
+        "version": 101,
         "internalName": "OneTouchTV",
-        "jarUrl": "https://raw.githubusercontent.com/GilangAditama/Nontonmovies/builds/OneTouchTV.jar",
         "description": "Asian Dramas",
-        "url": "https://raw.githubusercontent.com/GilangAditama/Nontonmovies/builds/OneTouchTV.cs3",
+        "url": "http://47.237.190.114:3000/d/OneTouchTV.cs3",
         "name": "OneTouchTV"
     },
     {
         "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://anime.oploverz.ac&size=%size%",
+        "fileHash": "sha256-7700d0f267094824794ee6ea09d2692e38a2177f853959cb975e3fa10fc56eb1",
         "apiVersion": 1,
-        "repositoryUrl": "https://github.com/GilangAditama/Nontonmovies",
-        "fileSize": 30088,
+        "repositoryUrl": "https://github.com/Makairamei/CS01.1",
+        "fileSize": 41896,
         "status": 1,
         "language": "id",
         "authors": [
@@ -403,16 +986,17 @@
             "Anime",
             "OVA"
         ],
-        "version": 31,
+        "version": 131,
         "internalName": "OploverzProvider",
-        "url": "https://raw.githubusercontent.com/GilangAditama/Nontonmovies/builds/OploverzProvider.cs3",
+        "url": "http://47.237.190.114:3000/d/OploverzProvider.cs3",
         "name": "OploverzProvider"
     },
     {
         "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://45.11.57.243&size=%size%",
+        "fileHash": "sha256-20185cb79e2014d47f8d9fd5072ffdf6c10fff236680bae8203563c542400246",
         "apiVersion": 1,
-        "repositoryUrl": "https://github.com/GilangAditama/Nontonmovies",
-        "fileSize": 24311,
+        "repositoryUrl": "https://github.com/Makairamei/CS01.1",
+        "fileSize": 35937,
         "status": 1,
         "language": "id",
         "authors": [
@@ -423,17 +1007,18 @@
             "TvSeries",
             "Movie"
         ],
-        "version": 11,
+        "version": 112,
         "internalName": "Oppadrama",
         "description": "Oppadrama",
-        "url": "https://raw.githubusercontent.com/GilangAditama/Nontonmovies/builds/Oppadrama.cs3",
+        "url": "http://47.237.190.114:3000/d/Oppadrama.cs3",
         "name": "Oppadrama"
     },
     {
         "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://otakudesu.cloud&size=%size%",
+        "fileHash": "sha256-5951de2347066a46c81afd1422d1a15868a58d2cd5c085c3219acf31123a87a1",
         "apiVersion": 1,
-        "repositoryUrl": "https://github.com/GilangAditama/Nontonmovies",
-        "fileSize": 27865,
+        "repositoryUrl": "https://github.com/Makairamei/CS01.1",
+        "fileSize": 44566,
         "status": 1,
         "language": "id",
         "authors": [
@@ -444,17 +1029,17 @@
             "Anime",
             "OVA"
         ],
-        "version": 3,
+        "version": 103,
         "internalName": "OtakudesuProvider",
-        "url": "https://raw.githubusercontent.com/GilangAditama/Nontonmovies/builds/OtakudesuProvider.cs3",
+        "url": "http://47.237.190.114:3000/d/OtakudesuProvider.cs3",
         "name": "OtakudesuProvider"
     },
     {
         "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://ww03.pencurimovie.bond&size=%size%",
-        "jarFileSize": 65600,
+        "fileHash": "sha256-1f7706b413b2b16cac77ed915d312eaf340996dc418452525e6f66139836f0c5",
         "apiVersion": 1,
-        "repositoryUrl": "https://github.com/GilangAditama/Nontonmovies",
-        "fileSize": 18654,
+        "repositoryUrl": "https://github.com/Makairamei/CS01.1",
+        "fileSize": 30886,
         "status": 1,
         "language": "id",
         "authors": [
@@ -464,18 +1049,39 @@
             "Movie",
             "TvSeries"
         ],
-        "version": 8,
+        "version": 108,
         "internalName": "Pencurimovie",
-        "jarUrl": "https://raw.githubusercontent.com/GilangAditama/Nontonmovies/builds/Pencurimovie.jar",
         "description": "Pencurimovie ",
-        "url": "https://raw.githubusercontent.com/GilangAditama/Nontonmovies/builds/Pencurimovie.cs3",
+        "url": "http://47.237.190.114:3000/d/Pencurimovie.cs3",
         "name": "Pencurimovie"
     },
     {
-        "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://v1.pusatfilm21info.net&size=%size%",
+        "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://ww192.pencurimoviesubmalay.motorcycles&size=%size%",
+        "fileHash": "sha256-8a6343813b6d9f34278d237b51e7cfedc1634c5b4dc9dd34a6268e1a8cd39b4e",
         "apiVersion": 1,
-        "repositoryUrl": "https://github.com/GilangAditama/Nontonmovies",
-        "fileSize": 21712,
+        "repositoryUrl": "https://github.com/Makairamei/CS01.1",
+        "fileSize": 43406,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Duro92"
+        ],
+        "tvTypes": [
+            "Movie",
+            "TvSeries"
+        ],
+        "version": 101,
+        "internalName": "Pmsm",
+        "description": "PMSM (Pencuri Movie Sub Malay)",
+        "url": "http://47.237.190.114:3000/d/Pmsm.cs3",
+        "name": "Pmsm"
+    },
+    {
+        "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://v1.pusatfilm21info.net&size=%size%",
+        "fileHash": "sha256-db3850ab33428e4d91b5dd80642da70b4bc7a67590b385086d1511da7a949d20",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Makairamei/CS01.1",
+        "fileSize": 82286,
         "status": 1,
         "language": "id",
         "authors": [
@@ -487,17 +1093,39 @@
             "TvSeries",
             "Movie"
         ],
-        "version": 11,
+        "version": 112,
         "internalName": "Pusatfilm",
         "description": "Pusatfilm is a plugin that provides streaming links for movies and TV series.",
-        "url": "https://raw.githubusercontent.com/GilangAditama/Nontonmovies/builds/Pusatfilm.cs3",
+        "url": "http://47.237.190.114:3000/d/Pusatfilm.cs3",
         "name": "Pusatfilm"
     },
     {
-        "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://v1.samehadaku.how&size=%size%",
+        "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://reelshort.dramaview.web.id&size=%size%",
+        "fileHash": "sha256-32e7cd164ddd596c79ccb3ea0293cf41143079fba8aafe82d6a018d262d846f3",
         "apiVersion": 1,
-        "repositoryUrl": "https://github.com/GilangAditama/Nontonmovies",
-        "fileSize": 20509,
+        "repositoryUrl": "https://github.com/Makairamei/CS01.1",
+        "fileSize": 38367,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Duro92"
+        ],
+        "tvTypes": [
+            "TvSeries",
+            "AsianDrama"
+        ],
+        "version": 101,
+        "internalName": "Reelshort",
+        "description": "ReelShort",
+        "url": "http://47.237.190.114:3000/d/Reelshort.cs3",
+        "name": "Reelshort"
+    },
+    {
+        "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://v1.samehadaku.how&size=%size%",
+        "fileHash": "sha256-fc3c1a51c052581c5d8689247cace9086cdd8f070e7ec699f826802be801b17e",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Makairamei/CS01.1",
+        "fileSize": 38296,
         "status": 1,
         "language": "id",
         "authors": [
@@ -509,16 +1137,40 @@
             "OVA",
             "Anime"
         ],
-        "version": 24,
+        "version": 125,
         "internalName": "Samehadaku",
-        "url": "https://raw.githubusercontent.com/GilangAditama/Nontonmovies/builds/Samehadaku.cs3",
+        "url": "http://47.237.190.114:3000/d/Samehadaku.cs3",
         "name": "Samehadaku"
     },
     {
-        "iconUrl": "https://github.com/duro92/ExtCloud/blob/main/SoraStream/Icon.png",
+        "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://sflix.film&size=%size%",
+        "fileHash": "sha256-90b64c61a241ca4bd761715523a7007128b4f1527936623940c7ba4cb884ec67",
         "apiVersion": 1,
-        "repositoryUrl": "https://github.com/GilangAditama/Nontonmovies",
-        "fileSize": 179696,
+        "repositoryUrl": "https://github.com/Makairamei/CS01.1",
+        "fileSize": 41852,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "Duro92"
+        ],
+        "tvTypes": [
+            "TvSeries",
+            "Movie",
+            "Anime",
+            "AsianDrama"
+        ],
+        "version": 101,
+        "internalName": "Sflix",
+        "description": "Sflix - Movie & Series subtitle indonesia",
+        "url": "http://47.237.190.114:3000/d/Sflix.cs3",
+        "name": "Sflix"
+    },
+    {
+        "iconUrl": "https://github.com/duro92/ExtCloud/blob/main/SoraStream/Icon.png",
+        "fileHash": "sha256-abfa4dc5ae5c5976872e8be01267f8f7108ed737dd1add0e542f7650ba1e184e",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Makairamei/CS01.1",
+        "fileSize": 193557,
         "status": 1,
         "language": "en",
         "authors": [
@@ -531,10 +1183,75 @@
             "Anime",
             "Movie"
         ],
-        "version": 235,
+        "version": 336,
         "internalName": "SoraStream",
         "description": "#1 best extention based on MultiAPI",
-        "url": "https://raw.githubusercontent.com/GilangAditama/Nontonmovies/builds/SoraStream.cs3",
+        "url": "http://47.237.190.114:3000/d/SoraStream.cs3",
         "name": "SoraStream"
+    },
+    {
+        "iconUrl": "https://raw.githubusercontent.com/phisher98/cloudstream-extensions-phisher/refs/heads/master/TokusatsuUltimate/TokusatsuUltimateIcon.png",
+        "fileHash": "sha256-177cd01e4237d2f3fd5972391752a2dd1ae8e6534754bfd3d377ba48f6ced75c",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Makairamei/CS01.1",
+        "fileSize": 38738,
+        "status": 1,
+        "language": "en",
+        "authors": [
+            "Phisher98,YoureMotherHelped-Love-Mom"
+        ],
+        "tvTypes": [
+            "TvSeries",
+            "Movie",
+            "Anime"
+        ],
+        "version": 101,
+        "internalName": "Tokusatsu",
+        "description": "Stream tokusatsu content including Kamen Rider, Super Sentai, Metal Heroes, and other Japanese special effect series with English subs",
+        "url": "http://47.237.190.114:3000/d/Tokusatsu.cs3",
+        "name": "Tokusatsu"
+    },
+    {
+        "iconUrl": "https://img.watch32.sx/xxrz/400x400/100/a9/5e/a95e15a880a9df3c045f6a5224daf576/a95e15a880a9df3c045f6a5224daf576.png",
+        "fileHash": "sha256-07c16bb58801d1e8e690a0f210c97d785fb7986aa95155e8b361ed66db981922",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Makairamei/CS01.1",
+        "fileSize": 50064,
+        "status": 1,
+        "language": "en",
+        "authors": [
+            "Phisher98"
+        ],
+        "tvTypes": [
+            "Movies",
+            "TvSeries"
+        ],
+        "version": 110,
+        "internalName": "Watch32",
+        "description": "Watch movies and series from Watch32",
+        "url": "http://47.237.190.114:3000/d/Watch32.cs3",
+        "name": "Watch32"
+    },
+    {
+        "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://winbu.net&size=%size%",
+        "fileHash": "sha256-640704620208c0d74238f749579dcc190cf06dd9f6f438f861c6a380e1490324",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Makairamei/CS01.1",
+        "fileSize": 40550,
+        "status": 1,
+        "language": "id",
+        "authors": [
+            "CodeSannz"
+        ],
+        "tvTypes": [
+            "Movie",
+            "Anime",
+            "TvSeries"
+        ],
+        "version": 101,
+        "internalName": "WinbuProvider",
+        "description": "Winbu — Streaming Anime, Movie and TV Series",
+        "url": "http://47.237.190.114:3000/d/WinbuProvider.cs3",
+        "name": "WinbuProvider"
     }
 ]

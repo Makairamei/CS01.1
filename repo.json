@@ -1,9 +1,9 @@
 {
-    "name": "M0ViesM0d68",
+    "name": "CS Premium Extensions",
     "description": "Cloudstream extensions collection",
-    "iconUrl": "https://ibb.co.com/9mdpbhNh",
+    "iconUrl": "https://raw.githubusercontent.com/recloudstream/cloudstream/master/app/src/main/res/drawable/ic_launcher.png",
     "manifestVersion": 1,
     "pluginLists": [
-      "https://raw.githubusercontent.com/HXznxinhanba10fa9v-coDekxz/Csnwy7XzmNb/builds/plugins.json"
+      "https://raw.githubusercontent.com/Makairamei/CS01.1/builds/plugins.json"
     ]
 }

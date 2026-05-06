@@ -24,6 +24,9 @@ object LicenseClient {
     private var licenseBlocked = false
     private var blockMessage = ""
     private var appContext: Context? = null
+    private var pluginSessionToken: String? = null
+    private var pluginSessionPlugin: String? = null
+    private var pluginSessionExpiry: Long = 0L
 
     fun init(context: Context) {
         appContext = context.applicationContext
@@ -258,6 +261,9 @@ object LicenseClient {
         cacheExpiry = 0L
         licenseBlocked = false
         blockMessage = ""
+        pluginSessionToken = null
+        pluginSessionPlugin = null
+        pluginSessionExpiry = 0L
         actionThrottle.clear()
     }
 
@@ -271,6 +277,77 @@ object LicenseClient {
         @com.fasterxml.jackson.annotation.JsonProperty("status") val status: String? = null,
         @com.fasterxml.jackson.annotation.JsonProperty("key") val key: String? = null
     )
+
+    data class PluginSessionResponse(
+        @com.fasterxml.jackson.annotation.JsonProperty("status") val status: String? = null,
+        @com.fasterxml.jackson.annotation.JsonProperty("session_token") val sessionToken: String? = null,
+        @com.fasterxml.jackson.annotation.JsonProperty("expires_in") val expiresIn: Int? = null,
+        @com.fasterxml.jackson.annotation.JsonProperty("message") val message: String? = null,
+        @com.fasterxml.jackson.annotation.JsonProperty("reason") val reason: String? = null
+    )
+
+    private suspend fun getPluginSessionToken(
+        pluginName: String,
+        action: String = "SESSION",
+        data: String? = null
+    ): String? {
+        val now = System.currentTimeMillis()
+        if (pluginSessionPlugin == pluginName &&
+            !pluginSessionToken.isNullOrEmpty() &&
+            now < pluginSessionExpiry - 15_000L
+        ) {
+            return pluginSessionToken
+        }
+
+        var key = getLicenseKey()
+        if (key.isNullOrEmpty()) key = discoverKey()
+        if (key.isNullOrEmpty()) {
+            licenseBlocked = true
+            blockMessage = "Lisensi tidak ditemukan."
+            return null
+        }
+
+        return try {
+            val deviceId = getDeviceId()
+            val deviceModel = getDeviceModel()
+            val cleanPlugin = pluginName.replace("\"", "")
+            val cleanAction = action.replace("\"", "")
+            val cleanData = (data ?: "").replace("\"", "")
+            val jsonPayload = """{"key":"$key","device_id":"$deviceId","device_model":"${deviceModel.replace("\"", "")}","plugin_name":"$cleanPlugin","action":"$cleanAction","data":"$cleanData"}"""
+            val body = jsonPayload.toRequestBody("application/json".toMediaTypeOrNull())
+            val response = app.post(
+                "$SERVER_URL/api/plugin/session",
+                requestBody = body
+            ).text
+            val json = tryParseJson<PluginSessionResponse>(response)
+
+            if (json?.status == "ok" && !json.sessionToken.isNullOrEmpty()) {
+                pluginSessionToken = json.sessionToken
+                pluginSessionPlugin = pluginName
+                pluginSessionExpiry = now + ((json.expiresIn ?: 300) * 1000L)
+                licenseBlocked = false
+                blockMessage = ""
+                json.sessionToken
+            } else {
+                pluginSessionToken = null
+                pluginSessionPlugin = null
+                pluginSessionExpiry = 0L
+                licenseBlocked = true
+                blockMessage = json?.message ?: "Session plugin tidak valid"
+                null
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Plugin session error: ${e.message}")
+            if (pluginSessionPlugin == pluginName &&
+                !pluginSessionToken.isNullOrEmpty() &&
+                now < pluginSessionExpiry + 60_000L
+            ) {
+                pluginSessionToken
+            } else {
+                null
+            }
+        }
+    }
 
     // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     // Hybrid Security: Selector & Secret fetching from server
@@ -314,43 +391,40 @@ object LicenseClient {
      */
     suspend fun getSelectors(pluginName: String): SelectorConfig? {
         val now = System.currentTimeMillis()
-        // Return cached selectors if still valid
         selectorCache[pluginName]?.let { (cfg, expiry) ->
             if (now < expiry) return cfg
         }
 
-        var key = getLicenseKey()
-        if (key.isNullOrEmpty()) key = discoverKey()
-        if (key.isNullOrEmpty()) {
-            licenseBlocked = true
-            blockMessage = "Lisensi tidak ditemukan. Tambahkan repo URL premium terlebih dahulu."
+        val sessionToken = getPluginSessionToken(pluginName, "SELECTORS") ?: run {
+            selectorCache.remove(pluginName)
             return null
         }
 
         return try {
-            val deviceId = getDeviceId()
-            val jsonPayload = """{"key":"$key","device_id":"$deviceId","plugin_name":"${pluginName.replace("\"", "")}"}"""
+            val jsonPayload = """{"plugin_name":"${pluginName.replace("\"", "")}"}"""
             val body = jsonPayload.toRequestBody("application/json".toMediaTypeOrNull())
-            val response = app.post("$SERVER_URL/api/selectors", requestBody = body).text
+            val response = app.post(
+                "$SERVER_URL/api/selectors",
+                headers = mapOf("Authorization" to "Bearer $sessionToken"),
+                requestBody = body
+            ).text
             val json = tryParseJson<SelectorResponse>(response)
 
             if (json?.status == "ok" && json.selectors != null) {
-                // Cache for 5 minutes
                 selectorCache[pluginName] = Pair(json.selectors, now + CACHE_TTL)
                 licenseBlocked = false
+                blockMessage = ""
                 json.selectors
             } else {
                 licenseBlocked = true
-                blockMessage = json?.message ?: "Lisensi tidak valid"
-                // Clear cache on failure
+                blockMessage = json?.message ?: "Selector plugin tidak tersedia"
                 selectorCache.remove(pluginName)
                 null
             }
         } catch (e: Exception) {
             Log.e(TAG, "getSelectors network error: ${e.message}")
-            // Grace period: return cached selectors even if expired (10 min grace)
             selectorCache[pluginName]?.let { (cfg, expiry) ->
-                if (now < expiry + 10 * 60 * 1000L) return cfg
+                if (now < expiry + 2 * 60 * 1000L) return cfg
             }
             null
         }
@@ -363,41 +437,40 @@ object LicenseClient {
      */
     suspend fun getMovieBoxSecret(pluginName: String): SecretResponse? {
         val now = System.currentTimeMillis()
-        // Return cached secret if still valid
         secretCache[pluginName]?.let { (secret, expiry) ->
             if (now < expiry) return secret
         }
 
-        var key = getLicenseKey()
-        if (key.isNullOrEmpty()) key = discoverKey()
-        if (key.isNullOrEmpty()) {
-            licenseBlocked = true
-            blockMessage = "Lisensi tidak ditemukan."
+        val sessionToken = getPluginSessionToken(pluginName, "SECRET") ?: run {
+            secretCache.remove(pluginName)
             return null
         }
 
         return try {
-            val deviceId = getDeviceId()
-            val jsonPayload = """{"key":"$key","device_id":"$deviceId","plugin_name":"${pluginName.replace("\"", "")}"}"""
+            val jsonPayload = """{"plugin_name":"${pluginName.replace("\"", "")}"}"""
             val body = jsonPayload.toRequestBody("application/json".toMediaTypeOrNull())
-            val response = app.post("$SERVER_URL/api/secret", requestBody = body).text
+            val response = app.post(
+                "$SERVER_URL/api/secret",
+                headers = mapOf("Authorization" to "Bearer $sessionToken"),
+                requestBody = body
+            ).text
             val json = tryParseJson<SecretResponse>(response)
 
             if (json?.status == "ok" && json.k1 != null) {
                 secretCache[pluginName] = Pair(json, now + CACHE_TTL)
                 licenseBlocked = false
+                blockMessage = ""
                 json
             } else {
                 licenseBlocked = true
-                blockMessage = json?.message ?: "Lisensi tidak valid"
+                blockMessage = json?.message ?: "Secret plugin tidak tersedia"
                 secretCache.remove(pluginName)
                 null
             }
         } catch (e: Exception) {
             Log.e(TAG, "getMovieBoxSecret network error: ${e.message}")
-            // Grace period: return cached secret even if expired (10 min grace)
             secretCache[pluginName]?.let { (secret, expiry) ->
-                if (now < expiry + 10 * 60 * 1000L) return secret
+                if (now < expiry + 2 * 60 * 1000L) return secret
             }
             null
         }
