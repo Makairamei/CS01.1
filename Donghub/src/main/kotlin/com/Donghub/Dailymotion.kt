@@ -4,7 +4,9 @@ import com.lagradost.cloudstream3.SubtitleFile
 import com.lagradost.cloudstream3.app
 import com.lagradost.cloudstream3.utils.ExtractorApi
 import com.lagradost.cloudstream3.utils.ExtractorLink
-import com.lagradost.cloudstream3.utils.M3u8Helper.Companion.generateM3u8
+import com.lagradost.cloudstream3.utils.ExtractorLinkType
+import com.lagradost.cloudstream3.utils.Qualities
+import com.lagradost.cloudstream3.utils.newExtractorLink
 import java.net.URI
 
 class Geodailymotion : Dailymotion() {
@@ -34,8 +36,10 @@ open class Dailymotion : ExtractorApi() {
         val subtitlesRegex = Regex(""""subtitles"\s*:\s*\{[^}]*"data"\s*:\s*(\[[^\]]*\])""")
 
         val urls = qualityUrlRegex.findAll(response)
-            .map { it.groupValues[1] }
-            .toList().filter { it.contains(".m3u8") }
+            .map { it.groupValues[1].replace("\\/", "/") }
+            .filter { it.contains(".m3u8") && !it.contains("dmxleo.") }
+            .distinct()
+            .toList()
 
         urls.forEach { videoUrl ->
             getStream(videoUrl, this.name, callback)
@@ -72,6 +76,21 @@ open class Dailymotion : ExtractorApi() {
         name: String,
         callback: (ExtractorLink) -> Unit
     ) {
-        return generateM3u8(name, streamLink, "").forEach(callback)
+        // Pass MASTER playlist URL directly to ExoPlayer (M3U8 type).
+        // Dailymotion's master playlist contains separate video & audio
+        // renditions; ExoPlayer reads master itself and merges audio +
+        // video automatically. Using generateM3u8() would expand into
+        // video-only variants which lose the audio track on some qualities.
+        callback.invoke(
+            newExtractorLink(
+                source = name,
+                name = name,
+                url = streamLink,
+                type = ExtractorLinkType.M3U8
+            ) {
+                this.referer = baseUrl
+                this.quality = Qualities.Unknown.value
+            }
+        )
     }
 }
