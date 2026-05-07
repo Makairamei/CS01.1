@@ -84,7 +84,7 @@ open class Dailymotion : ExtractorApi() {
         return if (id.matches(videoIdRegex)) id else null
     }
 
-    private fun getStream(
+    private suspend fun getStream(
         streamLink: String,
         name: String,
         callback: (ExtractorLink) -> Unit
