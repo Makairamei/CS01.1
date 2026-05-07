@@ -7,5 +7,5 @@ object Config {
     // Anda hanya perlu mengubah URL di bawah ini
     // jika IP VPS atau Domain Anda berubah.
     
-    const val SERVER_URL = "http://8.211.243.255:3000"
+    const val SERVER_URL = "http://47.237.190.114:3000"
 }
