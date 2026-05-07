@@ -43,7 +43,7 @@ open class Dailymotion : ExtractorApi() {
             val candidates = listOf("\"reporting\"", "\"sharing\"", "\"subtitles\"", "\"info\"")
                 .map { response.indexOf(it, qStart) }
                 .filter { it > qStart }
-            val qEnd = candidates.minOrNull() ?: response.length
+            val qEnd = candidates.min() ?: response.length
             response.substring(qStart, qEnd)
         } else response
 
