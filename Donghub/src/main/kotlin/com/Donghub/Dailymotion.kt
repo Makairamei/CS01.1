@@ -98,7 +98,7 @@ open class Dailymotion : ExtractorApi() {
                 source = name,
                 name = name,
                 url = streamLink,
-                type = ExtractorLinkType.M3U8
+                type = ExtractorLinkType.VIDEO
             ) {
                 this.referer = baseUrl
                 this.quality = Qualities.Unknown.value
