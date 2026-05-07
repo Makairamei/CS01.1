@@ -4,7 +4,9 @@ import com.lagradost.cloudstream3.SubtitleFile
 import com.lagradost.cloudstream3.app
 import com.lagradost.cloudstream3.utils.ExtractorApi
 import com.lagradost.cloudstream3.utils.ExtractorLink
-import com.lagradost.cloudstream3.utils.M3u8Helper.Companion.generateM3u8
+import com.lagradost.cloudstream3.utils.ExtractorLinkType
+import com.lagradost.cloudstream3.utils.Qualities
+import com.lagradost.cloudstream3.utils.newExtractorLink
 import java.net.URI
 
 class Geodailymotion : Dailymotion() {
@@ -30,12 +32,27 @@ open class Dailymotion : ExtractorApi() {
         val id = getVideoId(embedUrl) ?: return
         val metaDataUrl = "$baseUrl/player/metadata/video/$id"
         val response = app.get(metaDataUrl, referer = embedUrl).text
-        val qualityUrlRegex = Regex(""""url"\s*:\s*"([^"]+)"""")
         val subtitlesRegex = Regex(""""subtitles"\s*:\s*\{[^}]*"data"\s*:\s*(\[[^\]]*\])""")
 
-        val urls = qualityUrlRegex.findAll(response)
-            .map { it.groupValues[1] }
-            .toList().filter { it.contains(".m3u8") }
+        // Extract ONLY URLs inside the "qualities" block. The metadata JSON also
+        // contains advertising URLs (ad_url / ad_error_url under "advertising")
+        // that match a generic `"url":"..."` regex and would yield a silent /
+        // broken stream. We isolate the qualities block first.
+        val qStart = response.indexOf("\"qualities\"")
+        val qBlock = if (qStart >= 0) {
+            val candidates = listOf("\"reporting\"", "\"sharing\"", "\"subtitles\"", "\"info\"")
+                .map { response.indexOf(it, qStart) }
+                .filter { it > qStart }
+            val qEnd = candidates.minOrNull() ?: response.length
+            response.substring(qStart, qEnd)
+        } else response
+
+        val qualityUrlRegex = Regex(""""url"\s*:\s*"([^"]+\.m3u8[^"]*)"""")
+        val urls = qualityUrlRegex.findAll(qBlock)
+            .map { it.groupValues[1].replace("\\/", "/") }
+            .filter { !it.contains("dmxleo.") }
+            .distinct()
+            .toList()
 
         urls.forEach { videoUrl ->
             getStream(videoUrl, this.name, callback)
@@ -67,11 +84,25 @@ open class Dailymotion : ExtractorApi() {
         return if (id.matches(videoIdRegex)) id else null
     }
 
-    private suspend fun getStream(
+    private fun getStream(
         streamLink: String,
         name: String,
         callback: (ExtractorLink) -> Unit
     ) {
-        return generateM3u8(name, streamLink, "").forEach(callback)
+        // Important: Dailymotion master.m3u8 now ships video & audio as separate
+        // renditions. We must pass the MASTER playlist URL directly so ExoPlayer
+        // handles the #EXT-X-MEDIA audio tracks. Using generateM3u8() expands it
+        // into variant (video-only) streams which lose the audio track.
+        callback.invoke(
+            newExtractorLink(
+                source = name,
+                name = name,
+                url = streamLink,
+                type = ExtractorLinkType.M3U8
+            ) {
+                this.referer = baseUrl
+                this.quality = Qualities.Unknown.value
+            }
+        )
     }
 }
