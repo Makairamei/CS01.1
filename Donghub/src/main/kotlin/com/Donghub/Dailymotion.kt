@@ -32,17 +32,18 @@ open class Dailymotion : ExtractorApi() {
         val id = getVideoId(embedUrl) ?: return
         val metaDataUrl = "$baseUrl/player/metadata/video/$id"
         val response = app.get(metaDataUrl, referer = embedUrl).text
-        val qualityUrlRegex = Regex(""""url"\s*:\s*"([^"]+)"""")
         val subtitlesRegex = Regex(""""subtitles"\s*:\s*\{[^}]*"data"\s*:\s*(\[[^\]]*\])""")
 
-        val urls = qualityUrlRegex.findAll(response)
+        // Extract ONLY the master playlist URL from "auto" quality.
+        val autoRegex = Regex(""""auto"\s*:\s*\[\s*\{[^}]*"url"\s*:\s*"([^"]+)"""")
+        val urls = autoRegex.findAll(response)
             .map { it.groupValues[1].replace("\\/", "/") }
             .filter { it.contains(".m3u8") && !it.contains("dmxleo.") }
             .distinct()
             .toList()
 
         urls.forEach { videoUrl ->
-            getStream(videoUrl, this.name, callback)
+            getStream(videoUrl, embedUrl, this.name, callback)
         }
 
         val subtitlesMatches = subtitlesRegex.findAll(response).map { it.groupValues[1] }.toList()
@@ -73,14 +74,12 @@ open class Dailymotion : ExtractorApi() {
 
     private suspend fun getStream(
         streamLink: String,
+        embedUrl: String,
         name: String,
         callback: (ExtractorLink) -> Unit
     ) {
-        // Pass MASTER playlist URL directly to ExoPlayer (M3U8 type).
-        // Dailymotion's master playlist contains separate video & audio
-        // renditions; ExoPlayer reads master itself and merges audio +
-        // video automatically. Using generateM3u8() would expand into
-        // video-only variants which lose the audio track on some qualities.
+        // Dailymotion CDN requires Referer/Origin/User-Agent or 403 (error 2004).
+        val ua = "Mozilla/5.0 (Linux; Android 12) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120 Mobile Safari/537.36"
         callback.invoke(
             newExtractorLink(
                 source = name,
@@ -88,8 +87,13 @@ open class Dailymotion : ExtractorApi() {
                 url = streamLink,
                 type = ExtractorLinkType.M3U8
             ) {
-                this.referer = baseUrl
+                this.referer = embedUrl
                 this.quality = Qualities.Unknown.value
+                this.headers = mapOf(
+                    "Referer" to embedUrl,
+                    "Origin" to baseUrl,
+                    "User-Agent" to ua
+                )
             }
         )
     }
