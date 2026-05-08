@@ -200,26 +200,30 @@ val episodes = episodeElements
         subtitleCallback: (SubtitleFile) -> Unit,
         callback: (ExtractorLink) -> Unit
     ): Boolean {
-        LicenseClient.requireLicense(this.name, "PLAY", data)
+        val cfg = LicenseClient.getSelectors(this.name)
+            ?: throw RuntimeException("[PREMIUM] ${LicenseClient.getBlockMessage().ifEmpty { "Lisensi tidak valid atau habis masa berlakunya." }}")
         val document = app.get(data).document
 
-        document.selectFirst("div.player-embed iframe")
-            ?.getIframeAttr()
-            ?.let { iframe ->
-                loadExtractor(httpsify(iframe), data, subtitleCallback, callback)
+        document.selectFirst(cfg.playerSelector)
+            ?.let { el ->
+                val primary = el.attr(cfg.playerAttr)
+                val fallback = if (primary.isNullOrBlank()) el.attr(cfg.playerFallbackAttr) else primary
+                if (!fallback.isNullOrBlank()) {
+                    loadExtractor(httpsify(fallback), data, subtitleCallback, callback)
+                }
             }
 
-        val mirrorOptions = document.select("select.mirror option[value]:not([disabled])")
+        val mirrorOptions = document.select(cfg.mirrorSelector)
         for (opt in mirrorOptions) {
-            val base64 = opt.attr("value")
+            val base64 = opt.attr(cfg.mirrorValueAttr)
             if (base64.isBlank()) continue
             try {
                 val cleaned = base64.replace("\\s".toRegex(), "")
                 val decodedHtml = base64Decode(cleaned)
-                val iframeTag = Jsoup.parse(decodedHtml).selectFirst("iframe")
+                val iframeTag = Jsoup.parse(decodedHtml).selectFirst(cfg.mirrorIframeSelector)
                 val mirrorUrl = when {
-                    iframeTag?.attr("src")?.isNotBlank() == true -> iframeTag.attr("src")
-                    iframeTag?.attr("data-src")?.isNotBlank() == true -> iframeTag.attr("data-src")
+                    iframeTag?.attr(cfg.mirrorIframeAttr)?.isNotBlank() == true -> iframeTag.attr(cfg.mirrorIframeAttr)
+                    cfg.mirrorIframeFallbackAttr.isNotBlank() && iframeTag?.attr(cfg.mirrorIframeFallbackAttr)?.isNotBlank() == true -> iframeTag.attr(cfg.mirrorIframeFallbackAttr)
                     else -> null
                 }
                 if (!mirrorUrl.isNullOrBlank()) {
@@ -230,9 +234,9 @@ val episodes = episodeElements
             }
         }
 
-        val downloadLinks = document.select("div.dlbox li span.e a[href]")
+        val downloadLinks = document.select(cfg.downloadSelector)
         for (a in downloadLinks) {
-            val url = a.attr("href").trim()
+            val url = a.attr(cfg.downloadAttr).trim()
             if (url.isNotBlank()) {
                 loadExtractor(httpsify(url), data, subtitleCallback, callback)
             }
@@ -251,9 +255,8 @@ val episodes = episodeElements
         }
     }
 
-    private fun Element?.getIframeAttr(): String? {
-        return this?.attr("data-litespeed-src").takeIf { it?.isNotEmpty() == true }
-                ?: this?.attr("src")
+    private fun Element?.getIframeAttr(primary: String, fallback: String): String? {
+        return this?.attr(primary).takeIf { it?.isNotEmpty() == true } ?: this?.attr(fallback)
     }
 
     private fun String?.fixImageQuality(): String? {

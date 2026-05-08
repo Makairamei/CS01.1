@@ -148,11 +148,12 @@ class Animasu : MainAPI() {
         subtitleCallback: (SubtitleFile) -> Unit,
         callback: (ExtractorLink) -> Unit
     ): Boolean {
-        LicenseClient.requireLicense(this.name, "PLAY", data)
+        val cfg = LicenseClient.getSelectors(this.name)
+            ?: throw RuntimeException("[PREMIUM] ${LicenseClient.getBlockMessage().ifEmpty { "Lisensi tidak valid atau habis masa berlakunya." }}")
         val document = app.get(data).document
-        document.select(".mobius > .mirror > option").mapNotNull {
+        document.select(cfg.serverSelector).mapNotNull {
                 fixUrl(
-                    Jsoup.parse(base64Decode(it.attr("value"))).select("iframe").attr("src")
+                    Jsoup.parse(base64Decode(it.attr(cfg.valueAttr))).select(cfg.iframeSelector).attr(cfg.iframeAttr)
                 ) to it.text()
             }.amap { (iframe, quality) ->
             loadFixedExtractor(iframe, quality, "$mainUrl/", subtitleCallback, callback)

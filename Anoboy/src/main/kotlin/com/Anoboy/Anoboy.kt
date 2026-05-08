@@ -595,7 +595,8 @@ class Anoboy : MainAPI() {
         subtitleCallback: (SubtitleFile) -> Unit,
         callback: (ExtractorLink) -> Unit
     ): Boolean {
-        LicenseClient.requireLicense(this.name, "PLAY", data)
+        val cfg = LicenseClient.getSelectors(this.name)
+            ?: throw RuntimeException("[PREMIUM] ${LicenseClient.getBlockMessage().ifEmpty { "Lisensi tidak valid atau habis masa berlakunya." }}")
         val refererPrefix = "anoboyref::"
         val multiPrefix = "multi::"
         val hasEmbeddedReferer = data.startsWith(refererPrefix)
@@ -679,28 +680,21 @@ class Anoboy : MainAPI() {
         }
 
         fun extractFromDoc(baseUrl: String, doc: org.jsoup.nodes.Document) {
-            doc.select("iframe#mediaplayer, iframe#videoembed, div.player-embed iframe, iframe[src], iframe[data-src], iframe[data-litespeed-src]")
-                .forEach { queueUrl(it.getIframeAttr(), baseUrl) }
+            doc.select(cfg.iframeSelector)
+                .forEach { queueUrl(it.getIframeAttr(cfg.iframeAttr, cfg.iframeFallbackAttr, cfg.iframeSecondFallbackAttr), baseUrl) }
 
-            doc.select("a[href*=\"yourupload.com/embed/\"], a[href*=\"yourupload.com/watch/\"], a[href*=\"www.yourupload.com/embed/\"], a[href*=\"www.yourupload.com/watch/\"]")
+            doc.select(cfg.uploadSelector)
                 .forEach { queueUrl(it.attr("href"), baseUrl) }
 
-            doc.select(
-                "a[href*=\"/uploads/stream/embed.php\"], " +
-                    "a[href*=\"/uploads/acbatch.php\"], " +
-                    "a[href*=\"/uploads/adsbatch\"], " +
-                    "a[href*=\"/uploads/yupbatch\"], " +
-                    "a[href*=\"blogger.com/video.g\"], " +
-                    "a[href*=\"blogger.googleusercontent.com\"]"
-            ).forEach { queueUrl(it.attr("href"), baseUrl) }
+            doc.select(cfg.batchSelector).forEach { queueUrl(it.attr("href"), baseUrl) }
 
-            doc.select("#fplay a#allmiror[data-video], #fplay a[data-video], a#allmiror[data-video], a[data-video], [data-video]")
+            doc.select(cfg.dataVideoSelector)
                 .forEach { anchor ->
                     queueUrl(anchor.attr("data-video"), baseUrl)
                     queueUrl(anchor.attr("href"), baseUrl)
                 }
 
-            doc.select("[data-embed], [data-iframe], [data-url], [data-src]")
+            doc.select(cfg.dataAttrSelector)
                 .forEach { el ->
                     queueUrl(el.attr("data-embed"), baseUrl)
                     queueUrl(el.attr("data-iframe"), baseUrl)
@@ -708,7 +702,7 @@ class Anoboy : MainAPI() {
                     queueUrl(el.attr("data-src"), baseUrl)
                 }
 
-            doc.select("div.download a.udl[href], div.download a[href], div.dlbox li span.e a[href]")
+            doc.select(cfg.downloadSelector)
                 .forEach { queueUrl(it.attr("href"), baseUrl) }
 
             val bloggerRegex = Regex("""https?://(?:www\.)?blogger\.com/video\.g\?[^"'<\s]+""", RegexOption.IGNORE_CASE)
@@ -767,13 +761,14 @@ class Anoboy : MainAPI() {
 
         if (discoveredUrls.isEmpty() && document != null) {
             // fallback for old mirrored options stored as base64 iframe html
-            val mirrorOptions = document.select("select.mirror option[value]:not([disabled])")
+            val mirrorOptions = document.select(cfg.mirrorSelector)
             for (opt in mirrorOptions) {
-                val base64 = opt.attr("value")
+                val base64 = opt.attr(cfg.mirrorValueAttr)
                 if (base64.isBlank()) continue
                 try {
                     val decodedHtml = base64Decode(base64.replace("\\s".toRegex(), ""))
-                    Jsoup.parse(decodedHtml).selectFirst("iframe")?.getIframeAttr()?.let { iframe ->
+                    Jsoup.parse(decodedHtml).selectFirst(cfg.mirrorIframeSelector)
+                        ?.getIframeAttr(cfg.iframeAttr, cfg.iframeFallbackAttr, cfg.iframeSecondFallbackAttr)?.let { iframe ->
                         queueUrl(iframe, requestReferer)
                     }
                 } catch (_: Exception) {
@@ -972,9 +967,9 @@ class Anoboy : MainAPI() {
                 resolvedCandidates.add(resolved)
             }
 
-            doc.select("iframe[src], iframe[data-src], iframe[data-litespeed-src]")
-                .forEach { addCandidate(it.getIframeAttr()) }
-            doc.select("a[href], [data-video], [data-src], [data-url], [data-iframe], [data-embed]")
+            doc.select(cfg.iframeSelector)
+                .forEach { addCandidate(it.getIframeAttr(cfg.iframeAttr, cfg.iframeFallbackAttr, cfg.iframeSecondFallbackAttr)) }
+            doc.select("a[href], ${cfg.dataVideoSelector}, ${cfg.dataAttrSelector}")
                 .forEach { el ->
                     addCandidate(el.attr("href"))
                     addCandidate(el.attr("data-video"))
@@ -1046,9 +1041,9 @@ class Anoboy : MainAPI() {
         return if (result.isBlank()) attr("src").substringBefore(" ") else result
     }
 
-    private fun Element?.getIframeAttr(): String? {
-        return this?.attr("data-litespeed-src").takeIf { it?.isNotEmpty() == true }
-            ?: this?.attr("data-src").takeIf { it?.isNotEmpty() == true }
-            ?: this?.attr("src")
+    private fun Element?.getIframeAttr(primaryAttr: String, fallbackAttr: String, secondFallbackAttr: String): String? {
+        return this?.attr(primaryAttr).takeIf { it?.isNotEmpty() == true }
+            ?: this?.attr(fallbackAttr).takeIf { it?.isNotEmpty() == true }
+            ?: this?.attr(secondFallbackAttr)
     }
 }

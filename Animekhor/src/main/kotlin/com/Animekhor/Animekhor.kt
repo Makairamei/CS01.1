@@ -120,12 +120,13 @@ open class Animekhor : MainAPI() {
     }
 
     override suspend fun loadLinks(data: String, isCasting: Boolean, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit): Boolean {
-        LicenseClient.requireLicense(this.name, "PLAY", data)
+        val cfg = LicenseClient.getSelectors(this.name)
+            ?: throw RuntimeException("[PREMIUM] ${LicenseClient.getBlockMessage().ifEmpty { "Lisensi tidak valid atau habis masa berlakunya." }}")
         val document = app.get(data).documentLarge
-        document.select(".mobius option").forEach { server->
-            val base64 = server.attr("value")
+        document.select(cfg.serverSelector).forEach { server->
+            val encoded = server.attr(cfg.valueAttr)
             val regex = Regex("""src=["']([^"']+)["']""",RegexOption.IGNORE_CASE)
-            val decodedUrl = base64Decode(base64)
+            val decodedUrl = base64Decode(encoded)
             val matchResult = regex.find(decodedUrl)
             var url = matchResult?.groups?.get(1)?.value ?: "Not found"
             if (url.startsWith("//"))

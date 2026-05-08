@@ -52,12 +52,13 @@ open class SeaTV : Donghuastream() {
     }
 
     override suspend fun loadLinks(data: String, isCasting: Boolean, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit): Boolean {
-        LicenseClient.requireLicense(this.name, "PLAY", data)
+        val cfg = LicenseClient.getSelectors(this.name)
+            ?: throw RuntimeException("[PREMIUM] ${LicenseClient.getBlockMessage().ifEmpty { "Lisensi tidak valid atau habis masa berlakunya." }}")
         val document = app.get(data).documentLarge
-        document.select(".mobius option").amap { server ->
-            val base64 = server.attr("value").takeIf { it.isNotEmpty() }
+        document.select(cfg.serverSelector).amap { server ->
+            val base64 = server.attr(cfg.valueAttr).takeIf { it.isNotEmpty() }
             val doc = base64?.let { base64Decode(it).let(Jsoup::parse) }
-            val iframeUrl = doc?.select("iframe")?.attr("src")?.let(::httpsify)
+            val iframeUrl = doc?.select(cfg.iframeSelector)?.attr(cfg.iframeAttr)?.let(::httpsify)
             val metaUrl = doc?.select("meta[itemprop=embedUrl]")?.attr("content")?.let(::httpsify)
             val url = iframeUrl?.takeIf { it.isNotEmpty() } ?: metaUrl.orEmpty()
             if (url.isNotEmpty()) {

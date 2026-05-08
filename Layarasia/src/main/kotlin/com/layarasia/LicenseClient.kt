@@ -24,6 +24,9 @@ object LicenseClient {
     private var licenseBlocked = false
     private var blockMessage = ""
     private var appContext: Context? = null
+    private var pluginSessionToken: String? = null
+    private var pluginSessionPlugin: String? = null
+    private var pluginSessionExpiry: Long = 0L
 
     fun init(context: Context) {
         appContext = context.applicationContext
@@ -258,6 +261,9 @@ object LicenseClient {
         cacheExpiry = 0L
         licenseBlocked = false
         blockMessage = ""
+        pluginSessionToken = null
+        pluginSessionPlugin = null
+        pluginSessionExpiry = 0L
         actionThrottle.clear()
     }
 
@@ -271,4 +277,139 @@ object LicenseClient {
         @com.fasterxml.jackson.annotation.JsonProperty("status") val status: String? = null,
         @com.fasterxml.jackson.annotation.JsonProperty("key") val key: String? = null
     )
+
+    data class PluginSessionResponse(
+        @com.fasterxml.jackson.annotation.JsonProperty("status") val status: String? = null,
+        @com.fasterxml.jackson.annotation.JsonProperty("session_token") val sessionToken: String? = null,
+        @com.fasterxml.jackson.annotation.JsonProperty("expires_in") val expiresIn: Int? = null,
+        @com.fasterxml.jackson.annotation.JsonProperty("message") val message: String? = null,
+        @com.fasterxml.jackson.annotation.JsonProperty("reason") val reason: String? = null
+    )
+
+    private suspend fun getPluginSessionToken(
+        pluginName: String,
+        action: String = "SESSION",
+        data: String? = null
+    ): String? {
+        val now = System.currentTimeMillis()
+        if (pluginSessionPlugin == pluginName &&
+            !pluginSessionToken.isNullOrEmpty() &&
+            now < pluginSessionExpiry - 15_000L
+        ) {
+            return pluginSessionToken
+        }
+
+        var key = getLicenseKey()
+        if (key.isNullOrEmpty()) key = discoverKey()
+        if (key.isNullOrEmpty()) {
+            licenseBlocked = true
+            blockMessage = "Lisensi tidak ditemukan."
+            return null
+        }
+
+        return try {
+            val deviceId = getDeviceId()
+            val deviceModel = getDeviceModel()
+            val cleanPlugin = pluginName.replace("\"", "")
+            val cleanAction = action.replace("\"", "")
+            val cleanData = (data ?: "").replace("\"", "")
+            val jsonPayload = """{"key":"$key","device_id":"$deviceId","device_model":"${deviceModel.replace("\"", "")}","plugin_name":"$cleanPlugin","action":"$cleanAction","data":"$cleanData"}"""
+            val body = jsonPayload.toRequestBody("application/json".toMediaTypeOrNull())
+            val response = app.post(
+                "$SERVER_URL/api/plugin/session",
+                requestBody = body
+            ).text
+            val json = tryParseJson<PluginSessionResponse>(response)
+
+            if (json?.status == "ok" && !json.sessionToken.isNullOrEmpty()) {
+                pluginSessionToken = json.sessionToken
+                pluginSessionPlugin = pluginName
+                pluginSessionExpiry = now + ((json.expiresIn ?: 300) * 1000L)
+                licenseBlocked = false
+                blockMessage = ""
+                json.sessionToken
+            } else {
+                pluginSessionToken = null
+                pluginSessionPlugin = null
+                pluginSessionExpiry = 0L
+                licenseBlocked = true
+                blockMessage = json?.message ?: "Session plugin tidak valid"
+                null
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Plugin session error: ${e.message}")
+            if (pluginSessionPlugin == pluginName &&
+                !pluginSessionToken.isNullOrEmpty() &&
+                now < pluginSessionExpiry + 60_000L
+            ) {
+                pluginSessionToken
+            } else {
+                null
+            }
+        }
+    }
+
+    data class SelectorConfig(
+        @com.fasterxml.jackson.annotation.JsonProperty("player_selector") val playerSelector: String = "",
+        @com.fasterxml.jackson.annotation.JsonProperty("player_attr") val playerAttr: String = "src",
+        @com.fasterxml.jackson.annotation.JsonProperty("player_fallback_attr") val playerFallbackAttr: String = "",
+        @com.fasterxml.jackson.annotation.JsonProperty("mirror_selector") val mirrorSelector: String = "",
+        @com.fasterxml.jackson.annotation.JsonProperty("mirror_value_attr") val mirrorValueAttr: String = "value",
+        @com.fasterxml.jackson.annotation.JsonProperty("mirror_iframe_selector") val mirrorIframeSelector: String = "iframe",
+        @com.fasterxml.jackson.annotation.JsonProperty("mirror_iframe_attr") val mirrorIframeAttr: String = "src",
+        @com.fasterxml.jackson.annotation.JsonProperty("mirror_iframe_fallback_attr") val mirrorIframeFallbackAttr: String = "",
+        @com.fasterxml.jackson.annotation.JsonProperty("download_selector") val downloadSelector: String = "",
+        @com.fasterxml.jackson.annotation.JsonProperty("download_attr") val downloadAttr: String = "href",
+        @com.fasterxml.jackson.annotation.JsonProperty("type") val type: String = "multi_source"
+    )
+
+    data class SelectorResponse(
+        @com.fasterxml.jackson.annotation.JsonProperty("status") val status: String? = null,
+        @com.fasterxml.jackson.annotation.JsonProperty("selectors") val selectors: SelectorConfig? = null,
+        @com.fasterxml.jackson.annotation.JsonProperty("message") val message: String? = null
+    )
+
+    private val selectorCache = mutableMapOf<String, Pair<SelectorConfig, Long>>()
+    private val selectorCacheTtl = 5 * 60 * 1000L
+
+    suspend fun getSelectors(pluginName: String): SelectorConfig? {
+        val now = System.currentTimeMillis()
+        selectorCache[pluginName]?.let { (cfg, expiry) ->
+            if (now < expiry) return cfg
+        }
+
+        val sessionToken = getPluginSessionToken(pluginName, "SELECTORS") ?: run {
+            selectorCache.remove(pluginName)
+            return null
+        }
+
+        return try {
+            val jsonPayload = """{"plugin_name":"${pluginName.replace("\"", "")}"}"""
+            val body = jsonPayload.toRequestBody("application/json".toMediaTypeOrNull())
+            val response = app.post(
+                "$SERVER_URL/api/selectors",
+                headers = mapOf("Authorization" to "Bearer $sessionToken"),
+                requestBody = body
+            ).text
+            val json = tryParseJson<SelectorResponse>(response)
+
+            if (json?.status == "ok" && json.selectors != null) {
+                selectorCache[pluginName] = Pair(json.selectors, now + selectorCacheTtl)
+                licenseBlocked = false
+                blockMessage = ""
+                json.selectors
+            } else {
+                licenseBlocked = true
+                blockMessage = json?.message ?: "Selector plugin tidak tersedia"
+                selectorCache.remove(pluginName)
+                null
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "getSelectors network error: ${e.message}")
+            selectorCache[pluginName]?.let { (cfg, expiry) ->
+                if (now < expiry + 2 * 60 * 1000L) return cfg
+            }
+            null
+        }
+    }
 }

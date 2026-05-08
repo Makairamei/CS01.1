@@ -148,13 +148,12 @@ open class Donghuastream : MainAPI() {
         subtitleCallback: (SubtitleFile) -> Unit,
         callback: (ExtractorLink) -> Unit
     ): Boolean {
-        LicenseClient.requireLicense(this.name, "PLAY", data)
+        val cfg = LicenseClient.getSelectors(this.name)
+            ?: throw RuntimeException("[PREMIUM] ${LicenseClient.getBlockMessage().ifEmpty { "Lisensi tidak valid atau habis masa berlakunya." }}")
         val html = app.get(data).documentLarge
-
-        val options = html.select("option[data-index]")
-
+        val options = html.select(cfg.serverSelector)
         for (option in options) {
-            val base64 = option.attr("value")
+            val base64 = option.attr(cfg.valueAttr)
             if (base64.isBlank()) continue
             val label = option.text().trim()
             val decodedHtml = try {
@@ -164,7 +163,7 @@ open class Donghuastream : MainAPI() {
                 continue
             }
 
-            val iframeUrl = Jsoup.parse(decodedHtml).selectFirst("iframe")?.attr("src")?.let(::httpsify)
+            val iframeUrl = Jsoup.parse(decodedHtml).selectFirst(cfg.iframeSelector)?.attr(cfg.iframeAttr)?.let(::httpsify)
             if (iframeUrl.isNullOrEmpty()) continue
             when {
                 "vidmoly" in iframeUrl -> {
@@ -189,7 +188,6 @@ open class Donghuastream : MainAPI() {
                 }
             }
         }
-
         return true
     }
 }

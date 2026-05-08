@@ -107,14 +107,15 @@ class Donghub : MainAPI() {
         subtitleCallback: (SubtitleFile) -> Unit,
         callback: (ExtractorLink) -> Unit
     ): Boolean {
-        LicenseClient.requireLicense(this.name, "PLAY", data)
+        val cfg = LicenseClient.getSelectors(this.name)
+            ?: throw RuntimeException("[PREMIUM] ${LicenseClient.getBlockMessage().ifEmpty { "Lisensi tidak valid atau habis masa berlakunya." }}")
         val document = app.get(data).document
-        document.select(".mobius option").forEach { item ->
-            val base64 = item.attr("value")
-            if (base64.isNotBlank()) {
-                val decoded = base64Decode(base64)
+        document.select(cfg.serverSelector).forEach { item ->
+            val encoded = item.attr(cfg.valueAttr)
+            if (encoded.isNotBlank()) {
+                val decoded = base64Decode(encoded)
                 val doc = Jsoup.parse(decoded)
-                val iframe = doc.select("iframe").attr("src")
+                val iframe = doc.select(cfg.iframeSelector).attr(cfg.iframeAttr)
                 loadExtractor(fixUrl(iframe), subtitleCallback, callback)
             }
         }

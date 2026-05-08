@@ -143,19 +143,21 @@ class Auratail : MainAPI() {
         subtitleCallback: (SubtitleFile) -> Unit,
         callback: (ExtractorLink) -> Unit
     ): Boolean {
-        LicenseClient.requireLicense(this.name, "PLAY", data)
+        val cfg = LicenseClient.getSelectors(this.name)
+            ?: throw RuntimeException("[PREMIUM] ${LicenseClient.getBlockMessage().ifEmpty { "Lisensi tidak valid atau habis masa berlakunya." }}")
         val doc = app.get(data).document
         val links = mutableListOf<String>()
-        doc.select(".mobius option, select option, .mirror option").forEach {
-            val value = it.attr("value")
+        doc.select(cfg.serverSelector).forEach {
+            val value = it.attr(cfg.valueAttr)
             val decoded = decodeBase64(value)
             val src = if (!decoded.isNullOrBlank() && decoded.contains("<iframe")) {
-                Jsoup.parse(decoded).selectFirst("iframe")?.attr("src")
+                Jsoup.parse(decoded).selectFirst(cfg.iframeSelector)?.attr(cfg.iframeAttr)
             } else null
             if (!src.isNullOrBlank()) links.add(fixUrl(src))
         }
-        doc.select("iframe").forEach {
-            val src = it.attr("src")
+        // Optional: also collect direct iframes using server-provided iframe selector
+        doc.select(cfg.iframeSelector).forEach {
+            val src = it.attr(cfg.iframeAttr)
             if (src.isNotBlank()) links.add(fixUrl(src))
         }
         links.distinct().forEach { loadExtractor(it, subtitleCallback, callback) }

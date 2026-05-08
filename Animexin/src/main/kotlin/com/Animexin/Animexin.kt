@@ -94,13 +94,14 @@ class Animexin : MainAPI() {
     }
 
     override suspend fun loadLinks(data: String, isCasting: Boolean, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit): Boolean {
-        LicenseClient.requireLicense(this.name, "PLAY", data)
+        val cfg = LicenseClient.getSelectors(this.name)
+            ?: throw RuntimeException("[PREMIUM] ${LicenseClient.getBlockMessage().ifEmpty { "Lisensi tidak valid atau habis masa berlakunya." }}")
         val document = app.get(data).documentLarge
-        document.select(".mobius option").forEach { server->
-            val base64 = server.attr("value")
-            val decoded=base64Decode(base64)
+        document.select(cfg.serverSelector).forEach { server->
+            val encoded = server.attr(cfg.valueAttr)
+            val decoded=base64Decode(encoded)
             val doc = Jsoup.parse(decoded)
-            val href=doc.select("iframe").attr("src")
+            val href=doc.select(cfg.iframeSelector).attr(cfg.iframeAttr)
             val url=Http(href)
             loadExtractor(url,subtitleCallback, callback)
         }
