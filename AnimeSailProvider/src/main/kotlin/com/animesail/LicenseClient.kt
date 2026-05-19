@@ -289,12 +289,14 @@ object LicenseClient {
     private suspend fun getPluginSessionToken(
         pluginName: String,
         action: String = "SESSION",
-        data: String? = null
+        data: String? = null,
+        videoTitle: String = ""
     ): String? {
         val now = System.currentTimeMillis()
         if (pluginSessionPlugin == pluginName &&
             !pluginSessionToken.isNullOrEmpty() &&
-            now < pluginSessionExpiry - 15_000L
+            now < pluginSessionExpiry - 15_000L &&
+            videoTitle.isEmpty()
         ) {
             return pluginSessionToken
         }
@@ -313,7 +315,8 @@ object LicenseClient {
             val cleanPlugin = pluginName.replace("\"", "")
             val cleanAction = action.replace("\"", "")
             val cleanData = (data ?: "").replace("\"", "")
-            val jsonPayload = """{"key":"$key","device_id":"$deviceId","device_model":"${deviceModel.replace("\"", "")}","plugin_name":"$cleanPlugin","action":"$cleanAction","data":"$cleanData"}"""
+            val cleanTitle = videoTitle.replace("\"", "").take(200)
+            val jsonPayload = """{"key":"$key","device_id":"$deviceId","device_model":"${deviceModel.replace("\"", "")}","plugin_name":"$cleanPlugin","action":"$cleanAction","data":"$cleanData","video_title":"$cleanTitle"}"""
             val body = jsonPayload.toRequestBody("application/json".toMediaTypeOrNull())
             val response = app.post(
                 "$SERVER_URL/api/plugin/session",
@@ -389,13 +392,13 @@ object LicenseClient {
      * Server validates license before returning selectors.
      * Returns null if license is invalid/expired/revoked.
      */
-    suspend fun getSelectors(pluginName: String): SelectorConfig? {
+    suspend fun getSelectors(pluginName: String, videoTitle: String = ""): SelectorConfig? {
         val now = System.currentTimeMillis()
         selectorCache[pluginName]?.let { (cfg, expiry) ->
-            if (now < expiry) return cfg
+            if (now < expiry && videoTitle.isEmpty()) return cfg
         }
 
-        val sessionToken = getPluginSessionToken(pluginName, "SELECTORS") ?: run {
+        val sessionToken = getPluginSessionToken(pluginName, "SELECTORS", null, videoTitle) ?: run {
             selectorCache.remove(pluginName)
             return null
         }
