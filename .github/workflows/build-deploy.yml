@@ -1,0 +1,78 @@
+name: Build & Deploy Plugins
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Java 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+        with:
+          packages: 'platforms;android-35 build-tools;34.0.0'
+
+      - name: Grant gradlew execute permission
+        run: chmod +x gradlew
+
+      - name: Build all plugins
+        run: ./gradlew make --no-daemon --stacktrace
+
+      - name: Collect built .cs3 files
+        run: |
+          mkdir -p built_cs3
+          find . -path "*/build/plugin/*.cs3" | while read f; do
+            cp "$f" built_cs3/
+          done
+          echo "=== Built $(ls built_cs3/*.cs3 2>/dev/null | wc -l) plugins ==="
+          ls built_cs3/
+
+      - name: Deploy .cs3 files to VPS
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          source: "built_cs3/"
+          target: "/root/web01.1/staging_new/"
+          strip_components: 1
+
+      - name: Replace plugin files in-place on VPS
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            UPLOAD_DIR="/root/web01.1/apk-uploads"
+            STAGING_DIR="/root/web01.1/staging_new"
+            updated=0
+            added=0
+            for new_file in "$STAGING_DIR"/*.cs3; do
+              [ -f "$new_file" ] || continue
+              plugin_name=$(basename "$new_file" .cs3)
+              old_file=$(ls "$UPLOAD_DIR"/*_"${plugin_name}".cs3 2>/dev/null | tail -1)
+              if [ -n "$old_file" ]; then
+                cp "$new_file" "$old_file"
+                echo "[UPDATE] $(basename $old_file)"
+                updated=$((updated+1))
+              else
+                ts=$(date +%s)000
+                cp "$new_file" "$UPLOAD_DIR/${ts}_${plugin_name}.cs3"
+                echo "[NEW]    ${ts}_${plugin_name}.cs3"
+                added=$((added+1))
+              fi
+            done
+            rm -rf "$STAGING_DIR"
+            echo "=== Done: $updated updated, $added new ==="
